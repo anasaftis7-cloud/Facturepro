@@ -1,0 +1,3066 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FacturePro · Anas Aftis</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f2744'/><text y='68' x='50' text-anchor='middle' font-size='58'>🧾</text></svg>">
+<meta name="theme-color" content="#0f2744">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="FacturePro">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════════ */
+:root{
+  --bg:#f0f4f8;
+  --surface:#fff;
+  --surface2:#f8fafc;
+  --surface3:#f1f5f9;
+  --border:#e2e8f0;
+  --border2:#cbd5e1;
+  --navy:#0f2744;
+  --navy2:#1e3a5f;
+  --blue:#2563eb;
+  --blue-l:#dbeafe;
+  --gold:#d97706;
+  --gold-l:#fef3c7;
+  --green:#059669;
+  --green-l:#d1fae5;
+  --red:#dc2626;
+  --red-l:#fee2e2;
+  --orange:#d97706;
+  --orange-l:#fde68a;
+  --purple:#7c3aed;
+  --purple-l:#ede9fe;
+  --text:#0f172a;
+  --text2:#334155;
+  --text3:#64748b;
+  --text4:#94a3b8;
+  --sans:'Inter',system-ui,sans-serif;
+  --head:'Space Grotesk',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --r:8px;--r2:12px;--r3:16px;
+  --sh:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --sh2:0 4px 20px rgba(0,0,0,.1);
+  --sh3:0 20px 60px rgba(0,0,0,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:var(--sans);background:var(--bg);color:var(--text);font-size:14px;-webkit-font-smoothing:antialiased;}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px;}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+.shell{display:flex;height:100vh;overflow:hidden;}
+
+/* SIDEBAR */
+.rail{
+  width:230px;min-width:230px;
+  background:linear-gradient(180deg,var(--navy) 0%,#162038 100%);
+  display:flex;flex-direction:column;overflow-y:auto;
+  box-shadow:4px 0 20px rgba(0,0,0,.2);z-index:10;
+}
+.brand{padding:20px 16px 18px;border-bottom:1px solid rgba(255,255,255,.07);}
+.brand-row{display:flex;align-items:center;gap:11px;}
+.brand-ico{
+  width:38px;height:38px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),#f59e0b);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:0 3px 12px rgba(217,119,6,.45);
+}
+.brand-name{font-family:var(--head);color:#fff;font-size:15.5px;font-weight:700;line-height:1.2;}
+.brand-sub{color:rgba(255,255,255,.3);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
+
+.nav{padding:10px 10px;flex:1;}
+.nav-grp{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.22);padding:14px 8px 5px;font-weight:700;}
+.nav-item{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;
+  border-radius:9px;color:rgba(255,255,255,.5);cursor:pointer;
+  font-size:13px;font-weight:500;border:none;background:none;
+  width:100%;text-align:left;transition:all .15s;margin-bottom:2px;
+}
+.nav-item:hover{color:#fff;background:rgba(255,255,255,.08);}
+.nav-item.on{
+  color:#fff;
+  background:linear-gradient(135deg,rgba(37,99,235,.45),rgba(37,99,235,.25));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);
+}
+.nav-item.on .ni{color:#60a5fa;}
+.ni{width:18px;text-align:center;font-size:15px;flex-shrink:0;opacity:.8;}
+.nav-item.on .ni{opacity:1;}
+
+.rail-foot{padding:12px 12px;border-top:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.18);}
+.rail-kv{padding:4px 6px;margin-bottom:2px;}
+.rail-kv-l{font-size:9px;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.07em;}
+.rail-kv-v{font-family:var(--mono);color:#fbbf24;font-size:12px;font-weight:500;margin-top:1px;}
+
+/* WORKSPACE */
+.workspace{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.topbar{
+  height:58px;background:var(--surface);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 26px;gap:14px;
+  flex-shrink:0;box-shadow:var(--sh);z-index:5;
+}
+.page-title{font-family:var(--head);font-size:17px;font-weight:600;flex:1;color:var(--text);}
+.user-pill{
+  display:flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:30px;cursor:pointer;transition:all .15s;
+}
+.user-pill:hover{border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-l);}
+.uavatar{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--blue));
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;flex-shrink:0;
+}
+.uavatar.admin{background:linear-gradient(135deg,var(--gold),#f59e0b);}
+.user-pill span{font-size:12.5px;font-weight:500;color:var(--text2);}
+.btn-lock{
+  display:flex;align-items:center;gap:5px;padding:7px 13px;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;cursor:pointer;font-size:12px;font-weight:500;
+  color:var(--text3);transition:all .15s;
+}
+.btn-lock:hover{background:var(--red-l);border-color:#fca5a5;color:var(--red);}
+
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:24px 28px 60px;}
+.page{display:none;}.page.on{display:block;}
+
+/* ═══════════════════════════════════════════
+   COMPONENTS
+═══════════════════════════════════════════ */
+
+/* BUTTONS */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;padding:9px 17px;
+  border-radius:var(--r);border:none;cursor:pointer;
+  font-family:var(--sans);font-size:13px;font-weight:500;
+  transition:all .15s;white-space:nowrap;
+}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 1px 4px rgba(37,99,235,.3);}
+.btn-primary:hover{background:#1d4ed8;transform:translateY(-1px);box-shadow:0 3px 10px rgba(37,99,235,.35);}
+.btn-navy{background:var(--navy);color:#fff;}
+.btn-navy:hover{background:var(--navy2);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#f59e0b);color:#fff;box-shadow:0 1px 6px rgba(217,119,6,.3);}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 3px 12px rgba(217,119,6,.4);}
+.btn-out{background:var(--surface);color:var(--text2);border:1px solid var(--border);}
+.btn-out:hover{background:var(--surface2);border-color:var(--border2);}
+.btn-danger{background:var(--surface);color:var(--red);border:1px solid #fca5a5;}
+.btn-danger:hover{background:var(--red-l);}
+.btn-success{background:var(--green);color:#fff;}
+.btn-success:hover{background:#047857;}
+.btn-sm{padding:6px 13px;font-size:12px;border-radius:7px;}
+.btn-xs{padding:4px 9px;font-size:11px;border-radius:6px;}
+
+/* KPI GRID */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.kpi{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);padding:20px;box-shadow:var(--sh);
+  transition:box-shadow .2s,transform .15s;position:relative;overflow:hidden;
+}
+.kpi::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--border);border-radius:var(--r2) var(--r2) 0 0;
+}
+.kpi:hover{box-shadow:var(--sh2);transform:translateY(-1px);}
+.kpi.k-blue::before{background:linear-gradient(90deg,var(--blue),#60a5fa);}
+.kpi.k-green::before{background:linear-gradient(90deg,var(--green),#34d399);}
+.kpi.k-gold::before{background:linear-gradient(90deg,var(--gold),#fbbf24);}
+.kpi.k-purple::before{background:linear-gradient(90deg,var(--purple),#a78bfa);}
+.kpi.k-navy{
+  background:linear-gradient(135deg,var(--navy),#1e3a5f);
+  border:none;box-shadow:0 4px 20px rgba(15,39,68,.35);
+}
+.kpi.k-navy::before{display:none;}
+.kpi.k-navy .kpi-l,.kpi.k-navy .kpi-s{color:rgba(255,255,255,.5);}
+.kpi.k-navy .kpi-v{color:#fff;}
+.kpi.k-em-green{
+  background:linear-gradient(135deg,#065f46,var(--green));
+  border:none;box-shadow:0 4px 20px rgba(5,150,105,.3);
+}
+.kpi.k-em-green::before{display:none;}
+.kpi.k-em-green .kpi-l,.kpi.k-em-green .kpi-s{color:rgba(255,255,255,.55);}
+.kpi.k-em-green .kpi-v{color:#fff;}
+.kpi-l{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--text3);margin-bottom:10px;font-weight:600;}
+.kpi-v{font-family:var(--head);font-size:28px;color:var(--text);font-weight:700;line-height:1;}
+.kpi-s{font-size:11px;color:var(--text4);margin-top:6px;}
+
+/* CARD */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);overflow:hidden;box-shadow:var(--sh);
+}
+.card-head{
+  padding:14px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.card-title{font-family:var(--head);font-weight:600;font-size:14px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;}
+thead tr{background:var(--surface2);}
+th{
+  text-align:left;padding:10px 18px;font-size:10.5px;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--text3);
+  border-bottom:1px solid var(--border);font-weight:600;
+}
+td{padding:12px 18px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2);}
+tr:last-child td{border-bottom:none;}
+tbody tr:hover td{background:#f8fafc;}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+.b-paid{background:var(--green-l);color:#065f46;}
+.b-pend{background:var(--orange-l);color:#92400e;}
+.b-late{background:var(--red-l);color:#991b1b;}
+.b-draft{background:var(--surface3);color:var(--text3);border:1px solid var(--border);}
+.b-sent{background:var(--blue-l);color:#1e40af;}
+.b-acc{background:var(--green-l);color:#065f46;}
+.b-ref{background:var(--red-l);color:#991b1b;}
+.b-conv{background:var(--purple-l);color:#5b21b6;}
+
+/* INPUT */
+.sbar{display:flex;gap:10px;margin-bottom:20px;}
+.inp{
+  padding:9px 14px;border:1.5px solid var(--border);border-radius:var(--r);
+  background:var(--surface);font-family:var(--sans);font-size:13.5px;
+  color:var(--text);outline:none;transition:all .15s;
+}
+.inp:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+.inp-full{flex:1;}
+select.inp{cursor:pointer;}
+.inp-group{position:relative;}
+.inp-group .inp{padding-left:36px;}
+.inp-group .ig{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text3);pointer-events:none;}
+
+/* FORM */
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.fg{margin-bottom:0;}
+.fg.full{grid-column:1/-1;}
+label{display:block;font-size:11px;font-weight:600;color:var(--text3);margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase;}
+.inp,select,textarea{width:100%;}
+textarea.inp{resize:vertical;}
+
+/* SECTION DIVIDER IN FORM */
+.fsec{
+  grid-column:1/-1;display:flex;align-items:center;gap:10px;margin:6px 0 2px;
+}
+.fsec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);white-space:nowrap;}
+.fsec-line{flex:1;height:1px;background:var(--border);}
+
+/* MODAL */
+.ov{
+  display:none;position:fixed;inset:0;
+  background:rgba(15,23,42,.6);backdrop-filter:blur(4px);
+  z-index:300;align-items:center;justify-content:center;
+}
+.ov.on{display:flex;}
+.modal{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r3);width:660px;max-width:96vw;max-height:92vh;
+  overflow-y:auto;box-shadow:var(--sh3);
+}
+.modal-lg{width:840px;}.modal-xl{width:1000px;}
+.mhead{
+  padding:20px 24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--surface);position:sticky;top:0;z-index:1;
+}
+.mtitle{font-family:var(--head);font-size:18px;font-weight:600;}
+.mtitle small{font-family:var(--sans);font-size:12px;font-weight:400;color:var(--text3);margin-left:8px;}
+.mbody{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.mbody.single{display:block;}
+.mfoot{
+  padding:16px 24px;border-top:1px solid var(--border);
+  display:flex;justify-content:flex-end;gap:10px;
+  background:var(--surface2);position:sticky;bottom:0;
+}
+.xbtn{background:none;border:none;cursor:pointer;font-size:22px;color:var(--text3);padding:2px 6px;border-radius:6px;}
+.xbtn:hover{background:var(--surface3);color:var(--text);}
+
+/* ITEMS TABLE */
+.itbl{width:100%;border-collapse:collapse;margin:12px 0;border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;}
+.itbl th{background:var(--surface2);font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);padding:8px 10px;border-bottom:1px solid var(--border);font-weight:600;}
+.itbl td{padding:5px 7px;border-bottom:1px solid var(--border);}
+.itbl tr:last-child td{border-bottom:none;}
+.itbl input,.itbl select{border:none;background:transparent;padding:5px;width:100%;font-family:var(--sans);font-size:13px;outline:none;border-radius:5px;}
+.itbl input:focus,.itbl select:focus{background:#eff6ff;outline:1px solid var(--blue);}
+
+/* TOTALS */
+.totbox{
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--r2);padding:16px 20px;margin-top:14px;
+}
+.trow{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:var(--text3);}
+.trow.grand{font-weight:700;color:var(--text);font-size:16px;border-top:2px solid var(--border);margin-top:8px;padding-top:10px;}
+
+/* ACTS */
+.acts{display:flex;gap:5px;}
+.empty{text-align:center;padding:56px;color:var(--text4);}
+.empty-ico{font-size:42px;margin-bottom:12px;}
+
+/* IO */
+.io-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:24px;margin-bottom:16px;box-shadow:var(--sh);}
+.io-card h3{font-family:var(--head);font-size:16px;margin-bottom:6px;}
+.io-card p{font-size:13px;color:var(--text3);margin-bottom:16px;line-height:1.7;}
+.drop-zone{border:2px dashed var(--border2);border-radius:var(--r2);padding:36px;text-align:center;cursor:pointer;transition:all .15s;}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--blue);background:#eff6ff;}
+.drop-zone p{color:var(--text3);font-size:13px;margin-top:8px;}
+
+/* ═══════════════════════════════════════════
+   PROFIL PAGE
+═══════════════════════════════════════════ */
+.profile-banner{
+  background:linear-gradient(135deg,var(--navy) 0%,#1e3a6e 100%);
+  border-radius:var(--r3);padding:28px 32px;margin-bottom:20px;
+  box-shadow:0 6px 28px rgba(15,39,68,.3);
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+}
+.profile-banner-left{display:flex;align-items:center;gap:20px;}
+.profile-big-avatar{
+  width:66px;height:66px;border-radius:16px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--gold),#f59e0b);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:26px;font-weight:700;font-family:var(--head);
+  box-shadow:0 4px 16px rgba(217,119,6,.4);
+}
+.profile-banner-name{font-family:var(--head);color:#fff;font-size:22px;font-weight:700;}
+.profile-banner-type{color:rgba(255,255,255,.55);font-size:13px;margin-top:4px;}
+.profile-id-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.id-pill{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  border-radius:7px;padding:6px 12px;display:flex;align-items:center;gap:6px;
+}
+.id-pill-label{font-size:9.5px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.1em;font-weight:600;}
+.id-pill-value{font-family:var(--mono);font-size:12px;color:#fff;font-weight:500;}
+.id-pill-empty{font-style:italic;color:rgba(255,255,255,.25);font-size:11px;font-family:var(--sans);}
+
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:20px;box-shadow:var(--sh);}
+.profile-card-title{
+  font-family:var(--head);font-size:13.5px;font-weight:600;
+  margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.profile-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.profile-fields.single{grid-template-columns:1fr;}
+.pf{display:flex;flex-direction:column;gap:3px;}
+.pf-label{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text4);}
+.pf-value{font-size:13.5px;color:var(--text2);font-weight:500;}
+.pf-value.mono{font-family:var(--mono);font-size:12.5px;}
+.pf-value.empty{color:var(--text4);font-style:italic;font-size:12px;}
+.pf-value.full{grid-column:1/-1;}
+
+/* ═══════════════════════════════════════════
+   MARGES PAGE
+═══════════════════════════════════════════ */
+.marge-bar-wrap{display:flex;align-items:center;gap:8px;}
+.marge-bar{flex:1;background:var(--surface3);border-radius:3px;height:7px;overflow:hidden;}
+.marge-bar-fill{height:100%;border-radius:3px;}
+
+/* ═══════════════════════════════════════════
+   LOGIN SCREEN
+═══════════════════════════════════════════ */
+#lock-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(135deg,#0a1628 0%,var(--navy) 50%,#0d1f3c 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+#lock-screen.hidden{display:none;}
+.lock-wrap{display:flex;gap:0;border-radius:20px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.55);width:820px;max-width:96vw;}
+.lock-left{
+  flex:1;background:linear-gradient(160deg,rgba(37,99,235,.25),rgba(15,39,68,.5));
+  backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);
+  padding:40px;display:flex;flex-direction:column;justify-content:center;
+}
+.lock-app-ico{
+  width:56px;height:56px;border-radius:14px;
+  background:linear-gradient(135deg,var(--gold),#f59e0b);
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  box-shadow:0 4px 20px rgba(217,119,6,.45);margin-bottom:20px;
+}
+.lock-left h1{font-family:var(--head);color:#fff;font-size:26px;font-weight:700;line-height:1.2;}
+.lock-left p{color:rgba(255,255,255,.4);font-size:13px;margin-top:8px;line-height:1.6;}
+.lock-features{margin-top:28px;display:flex;flex-direction:column;gap:10px;}
+.lock-feat{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.55);font-size:12.5px;}
+.lock-feat-ico{
+  width:28px;height:28px;border-radius:8px;
+  background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.lock-right{
+  width:360px;flex-shrink:0;
+  background:rgba(255,255,255,.04);backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.1);padding:36px 32px;
+}
+.lock-right-title{font-family:var(--head);color:#fff;font-size:18px;font-weight:600;margin-bottom:6px;}
+.lock-right-sub{color:rgba(255,255,255,.35);font-size:12px;margin-bottom:22px;}
+
+.login-step{display:none;}.login-step.on{display:block;}
+.user-list{display:flex;flex-direction:column;gap:8px;}
+.user-card{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;cursor:pointer;transition:all .15s;
+}
+.user-card:hover{background:rgba(255,255,255,.13);border-color:rgba(255,255,255,.25);transform:translateX(3px);}
+.uav{
+  width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(135deg,var(--blue),#3b82f6);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:15px;flex-shrink:0;
+}
+.uav.admin{background:linear-gradient(135deg,var(--gold),#f59e0b);}
+.ucard-name{font-weight:600;font-size:13.5px;color:#fff;}
+.ucard-role{font-size:11px;color:rgba(255,255,255,.4);}
+
+.lock-back{background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;padding:0;margin-bottom:16px;display:flex;align-items:center;gap:4px;transition:color .12s;}
+.lock-back:hover{color:#fff;}
+.login-user-box{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;margin-bottom:18px;
+}
+.lock-lbl{font-size:10px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.09em;margin-bottom:6px;}
+.lock-inp{
+  width:100%;padding:11px 14px;border:1.5px solid rgba(255,255,255,.15);
+  border-radius:8px;background:rgba(255,255,255,.07);color:#fff;
+  font-family:var(--mono);font-size:15px;letter-spacing:.1em;outline:none;
+  transition:all .15s;
+}
+.lock-inp:focus{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.1);}
+.lock-inp::placeholder{color:rgba(255,255,255,.25);}
+.lock-remember{display:flex;align-items:center;gap:8px;margin-top:10px;}
+.lock-remember label{font-size:12px;color:rgba(255,255,255,.4);text-transform:none;letter-spacing:0;font-weight:400;cursor:pointer;}
+.lock-btn{
+  width:100%;margin-top:14px;padding:13px;
+  background:linear-gradient(135deg,var(--blue),#1d4ed8);color:#fff;
+  border:none;border-radius:9px;font-size:14px;font-weight:600;cursor:pointer;
+  font-family:var(--sans);transition:all .15s;
+  box-shadow:0 4px 16px rgba(37,99,235,.4);
+}
+.lock-btn:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(37,99,235,.5);}
+.lock-err{color:#fca5a5;font-size:12px;margin-top:8px;min-height:16px;}
+.lock-footer{font-size:11px;color:rgba(255,255,255,.25);margin-top:10px;}
+
+/* ═══════════════════════════════════════════
+   USERS MODAL
+═══════════════════════════════════════════ */
+.pwd-section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:18px;margin-bottom:14px;}
+.pwd-section h4{font-size:13px;font-weight:600;margin-bottom:12px;font-family:var(--head);}
+.user-row{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:9px;margin-bottom:6px;
+}
+.user-row:last-child{margin-bottom:0;}
+.ubadge{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;}
+.ubadge.admin{background:var(--gold-l);color:#92400e;}
+.ubadge.user{background:var(--blue-l);color:#1e40af;}
+
+/* ═══════════════════════════════════════════
+   PRINT
+═══════════════════════════════════════════ */
+@media print{
+  .shell{display:none!important;}
+  .ov{display:none!important;}
+  .notif{display:none!important;}
+  .mnav-more-menu{display:none!important;}
+  #pzone{display:block!important;}
+  body{background:#fff;}
+}
+#pzone{display:none;}
+.pinv{padding:14mm 18mm;font-family:var(--sans);font-size:11.5px;max-width:210mm;margin:0 auto;color:#1e293b;}
+
+.pinv-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7mm;}
+.pinv-sender-name{font-family:var(--head);font-size:24px;font-weight:700;color:var(--navy);}
+.pinv-sender-detail{font-size:11px;color:#64748b;line-height:1.9;margin-top:5px;}
+.pinv-ids{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.pinv-id-chip{
+  background:#eff6ff;border:1px solid #bfdbfe;border-radius:5px;
+  padding:3px 9px;font-family:var(--mono);font-size:10px;color:#1e40af;
+}
+.pinv-id-chip span{color:#64748b;font-family:var(--sans);font-size:9px;margin-right:3px;text-transform:uppercase;letter-spacing:.06em;}
+.pinv-meta{text-align:right;}
+.pinv-doc-type{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#94a3b8;margin-bottom:3px;font-weight:700;}
+.pinv-doc-num{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--navy);}
+.pinv-doc-dates{margin-top:8px;}
+.pinv-doc-dates p{font-size:11px;color:#64748b;margin-top:3px;}
+.pinv-doc-status{margin-top:8px;}
+.pinv-rule{height:3px;background:linear-gradient(90deg,var(--navy),var(--blue),transparent);border:none;margin:5mm 0;}
+.pinv-bill-to{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin-bottom:5px;}
+.pinv-client{
+  background:#f8fafc;border-left:4px solid var(--gold);
+  padding:10px 14px;border-radius:0 6px 6px 0;margin-bottom:7mm;
+}
+.pinv-client strong{display:block;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.pinv-client-ids{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.pinv-client-id{font-size:10px;color:#475569;font-family:var(--mono);}
+.pinv-client span{display:block;font-size:11px;color:#64748b;line-height:1.8;}
+.pinv-objet{font-size:12px;color:#334155;margin-bottom:6mm;}
+.pinv-objet strong{color:var(--navy);}
+
+.ptbl{width:100%;border-collapse:collapse;margin-bottom:5mm;}
+.ptbl thead tr{background:var(--navy);}
+.ptbl th{padding:9px 12px;text-align:left;font-size:10px;letter-spacing:.07em;color:#fff;font-weight:600;}
+.ptbl td{padding:9px 12px;border-bottom:1px solid #e2e8f0;font-size:11.5px;}
+.ptbl tr:last-child td{border-bottom:none;}
+.ptbl tr:nth-child(even) td{background:#f8fafc;}
+.ptotals{margin-left:auto;width:280px;}
+.prow{display:flex;justify-content:space-between;padding:4px 0;font-size:11.5px;color:#64748b;}
+.prow.grand{
+  font-weight:700;font-size:16px;color:var(--navy);
+  border-top:2.5px solid var(--navy);margin-top:8px;padding-top:10px;
+}
+.pmarge{
+  display:flex;justify-content:space-between;padding:5px 10px;
+  background:#f0fdf4;border:1px solid #bbf7d0;border-radius:6px;
+  font-size:11px;color:#065f46;margin-top:5px;
+}
+.pnotes{
+  margin-top:5mm;padding:10px 14px;
+  background:#f8fafc;border:1px solid #e2e8f0;border-radius:5px;
+  font-size:11px;color:#475569;
+}
+.pnotes strong{display:block;color:var(--navy);margin-bottom:3px;font-size:11.5px;}
+.pfooter{
+  margin-top:10mm;padding-top:4mm;
+  border-top:1px solid #e2e8f0;
+  font-size:10px;color:#94a3b8;text-align:center;line-height:1.8;
+}
+.pstatus{
+  display:inline-block;padding:3px 10px;border-radius:4px;
+  font-size:10px;font-weight:700;letter-spacing:.07em;
+}
+
+/* ═══════════════════════════════════════════
+   ONEDRIVE SYNC BADGE
+═══════════════════════════════════════════ */
+.sync-bar{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 14px;background:var(--surface);
+  border-bottom:1px solid var(--border);
+  font-size:12px;color:var(--text3);
+  flex-shrink:0;
+}
+.sync-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.sync-dot.ok{background:var(--green);}
+.sync-dot.err{background:var(--red);}
+.sync-dot.spin{background:var(--gold);animation:pulse 1s infinite;}
+.sync-dot.off{background:var(--text4);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.sync-bar .sync-label{flex:1;}
+.sync-bar .btn-sync{padding:4px 10px;font-size:11px;border-radius:5px;}
+
+/* ═══════════════════════════════════════════
+   MOBILE BOTTOM NAV
+═══════════════════════════════════════════ */
+.mobile-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--surface);border-top:1px solid var(--border);
+  z-index:200;padding:6px 0 env(safe-area-inset-bottom,6px);
+  box-shadow:0 -4px 20px rgba(0,0,0,.08);
+}
+.mobile-nav-inner{display:flex;justify-content:space-around;}
+.mnav-item{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:6px 12px;border:none;background:none;cursor:pointer;
+  color:var(--text3);font-size:10px;font-weight:500;font-family:var(--sans);
+  border-radius:8px;transition:all .15s;flex:1;
+}
+.mnav-item.on{color:var(--blue);}
+.mnav-item .mni{font-size:20px;line-height:1;}
+.mnav-more-menu{
+  display:none;position:fixed;bottom:70px;right:12px;left:12px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r2);box-shadow:var(--sh3);z-index:300;
+  padding:8px;
+}
+.mnav-more-menu.on{display:block;}
+.mnav-more-item{
+  display:flex;align-items:center;gap:12px;padding:12px 14px;
+  border-radius:8px;cursor:pointer;font-size:14px;color:var(--text2);
+  font-weight:500;border:none;background:none;width:100%;text-align:left;
+}
+.mnav-more-item:hover{background:var(--surface2);}
+.mnav-more-item .mi{font-size:18px;width:24px;text-align:center;}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — TABLET (≤900px)
+═══════════════════════════════════════════ */
+@media(max-width:900px){
+  .rail{display:none;}
+  .kpis{grid-template-columns:repeat(2,1fr);}
+  .two-col{grid-template-columns:1fr;}
+  .profile-grid{grid-template-columns:1fr;}
+  .frow{grid-template-columns:1fr;}
+  .fg.full{grid-column:1/-1;}
+  .fsec{grid-column:1/-1;}
+  .modal{width:98vw!important;max-width:98vw!important;margin:8px;}
+  .lock-wrap{flex-direction:column;width:94vw;border-radius:16px;}
+  .lock-left{display:none;}
+  .lock-right{width:100%;padding:28px 24px;}
+  .mobile-nav{display:block;}
+  .workspace{padding-bottom:65px;}
+  .content{padding:16px 14px 80px;}
+  .topbar{padding:0 14px;height:52px;}
+  .page-title{font-size:15px;}
+  .profile-banner{flex-direction:column;align-items:flex-start;gap:14px;padding:20px;}
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE — MOBILE (≤480px)
+═══════════════════════════════════════════ */
+@media(max-width:480px){
+  .kpis{grid-template-columns:1fr 1fr;}
+  .kpi{padding:14px;}
+  .kpi-v{font-size:22px;}
+  .card-head{padding:12px 14px;}
+  th{padding:8px 10px;font-size:9.5px;}
+  td{padding:10px 10px;font-size:12.5px;}
+  .acts{gap:3px;}
+  .btn-xs{padding:3px 7px;font-size:10.5px;}
+  /* Hide less important columns on mobile */
+  .hide-mobile{display:none!important;}
+  .sbar{flex-wrap:wrap;}
+  .sbar select{width:100%!important;}
+  .topbar .user-pill span{display:none;}
+  .topbar .btn-lock span{display:none;}
+  .itbl th:nth-child(4),.itbl td:nth-child(4),
+  .itbl th:nth-child(5),.itbl td:nth-child(5){display:none;}
+  .sync-bar{font-size:11px;padding:5px 10px;}
+}
+</style>
+
+</head>
+<body>
+
+<!-- ═══ MOBILE MORE MENU ═══ -->
+<div class="mnav-more-menu" id="mnav-more">
+  <button class="mnav-more-item" onclick="navM('interventions')"><span class="mi">🔧</span>Interventions</button>
+  <button class="mnav-more-item" onclick="navM('marges')"><span class="mi">◎</span>Marges</button>
+  <button class="mnav-more-item" onclick="navM('fournisseurs')"><span class="mi">◍</span>Fournisseurs</button>
+  <button class="mnav-more-item" onclick="navM('produits')"><span class="mi">◈</span>Produits</button>
+  <button class="mnav-more-item" onclick="navM('profil')"><span class="mi">👤</span>Mon profil</button>
+  <button class="mnav-more-item" onclick="navM('bdd')"><span class="mi">⊡</span>Base de données</button>
+  <button class="mnav-more-item" onclick="openUsersModal();closeMMore()"><span class="mi">👥</span>Utilisateurs</button>
+  <button class="mnav-more-item" onclick="openOvGD();closeMMore()"><span class="mi">🟢</span>Google Drive</button>
+  <button class="mnav-more-item" style="color:var(--red)" onclick="lockApp();closeMMore()"><span class="mi">🔒</span>Verrouiller</button>
+</div>
+
+<!-- ═══ ONEDRIVE INFO MODAL (removed Azure) ═══ -->
+
+
+<!-- ═══════════════════════════════════════════
+     LOGIN SCREEN
+═══════════════════════════════════════════ -->
+<div id="lock-screen">
+  <div class="lock-wrap">
+    <div class="lock-left">
+      <div class="lock-app-ico">🧾</div>
+      <h1>FacturePro</h1>
+      <p>Gestion complète de facturation<br>pour auto-entrepreneurs au Maroc.</p>
+      <div class="lock-features">
+        <div class="lock-feat"><div class="lock-feat-ico">📋</div>Devis & Factures professionnels</div>
+        <div class="lock-feat"><div class="lock-feat-ico">📊</div>Analyse des marges bénéficiaires</div>
+        <div class="lock-feat"><div class="lock-feat-ico">🏢</div>Gestion clients & fournisseurs</div>
+        <div class="lock-feat"><div class="lock-feat-ico">💾</div>Export / Import base de données</div>
+      </div>
+    </div>
+    <div class="lock-right">
+      <div class="lock-right-title">Connexion</div>
+      <div class="lock-right-sub">Choisissez votre compte</div>
+      <!-- Step 1 -->
+      <div class="login-step on" id="step-users">
+        <div class="user-list" id="login-user-list"></div>
+        <div class="lock-err" id="lock-err-users"></div>
+        <div class="lock-footer" id="lock-footer"></div>
+      </div>
+      <!-- Step 2 -->
+      <div class="login-step" id="step-pwd">
+        <button class="lock-back" onclick="goBack()">← Changer de compte</button>
+        <div class="login-user-box" id="login-user-box">
+          <div class="uav" id="login-uav">?</div>
+          <div><div id="login-uname" style="font-weight:600;color:#fff;font-size:14px"></div><div id="login-urole" style="font-size:11px;color:rgba(255,255,255,.4)"></div></div>
+        </div>
+        <div class="lock-lbl">Mot de passe</div>
+        <input class="lock-inp" type="password" id="lock-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')unlock()">
+        <div class="lock-remember">
+          <input type="checkbox" id="lock-rem" style="accent-color:var(--blue);width:14px;height:14px;cursor:pointer">
+          <label for="lock-rem">Se souvenir de moi</label>
+        </div>
+        <button class="lock-btn" onclick="unlock()">Se connecter →</button>
+        <div class="lock-err" id="lock-err"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODAL UTILISATEURS & SÉCURITÉ
+═══════════════════════════════════════════ -->
+<div class="ov" id="ov-users">
+  <div class="modal">
+    <div class="mhead"><span class="mtitle">👥 Utilisateurs & Sécurité</span><button class="xbtn" onclick="closeOv('ov-users')">×</button></div>
+    <div class="mbody single">
+      <div class="pwd-section">
+        <h4>⚙️ Session courante</h4>
+        <div id="session-info" style="font-size:13px;color:var(--green);font-family:var(--mono);margin-bottom:10px"></div>
+        <button class="btn btn-danger btn-sm" onclick="lockApp();closeOv('ov-users')">🔒 Verrouiller maintenant</button>
+      </div>
+      <div class="pwd-section" id="sec-users-admin">
+        <h4>👥 Utilisateurs <span id="uc" style="color:var(--text3);font-size:12px;font-weight:400"></span>
+          <button class="btn btn-primary btn-xs" style="margin-left:auto" onclick="openAddUser()">+ Ajouter</button>
+        </h4>
+        <div id="users-list"></div>
+      </div>
+      <div class="pwd-section">
+        <h4>🔑 Changer mon mot de passe</h4>
+        <div class="frow" style="margin-bottom:0">
+          <div class="fg"><label>Mot de passe actuel</label><input class="inp" type="password" id="pwd-old"></div>
+          <div class="fg full"><label>Nouveau mot de passe (min. 4 car.)</label><input class="inp" type="password" id="pwd-new"></div>
+          <div class="fg full"><label>Confirmer</label><input class="inp" type="password" id="pwd-conf"></div>
+        </div>
+        <div id="pwd-err" style="color:var(--red);font-size:12px;margin-top:6px;min-height:14px"></div>
+      </div>
+      <div class="pwd-section" id="sec-dur-admin">
+        <h4>⏱ Durée de session</h4>
+        <select class="inp" id="ses-dur" style="max-width:200px">
+          <option value="15">15 minutes</option>
+          <option value="30" selected>30 minutes</option>
+          <option value="60">1 heure</option>
+          <option value="120">2 heures</option>
+          <option value="480">8 heures</option>
+          <option value="1440">24 heures</option>
+        </select>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-out" onclick="closeOv('ov-users')">Fermer</button>
+      <button class="btn btn-gold" onclick="savePwd()">Enregistrer mot de passe</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL AJOUTER UTILISATEUR -->
+<div class="ov" id="ov-adduser">
+  <div class="modal">
+    <div class="mhead"><span class="mtitle" id="au-title">Ajouter un utilisateur</span><button class="xbtn" onclick="closeOv('ov-adduser')">×</button></div>
+    <div class="mbody">
+      <input type="hidden" id="au-id">
+      <div class="fg full"><label>Nom complet *</label><input class="inp" id="au-name"></div>
+      <div class="fg"><label>Rôle</label><select class="inp" id="au-role"><option value="user">Utilisateur</option><option value="admin">Administrateur</option></select></div>
+      <div class="fg"><label>Durée session spécifique</label><select class="inp" id="au-dur"><option value="0">Globale (défaut)</option><option value="15">15 min</option><option value="30">30 min</option><option value="60">1 h</option><option value="120">2 h</option><option value="480">8 h</option><option value="1440">24 h</option></select></div>
+      <div class="fg"><label>Mot de passe</label><input class="inp" type="password" id="au-pwd"></div>
+      <div class="fg"><label>Confirmer</label><input class="inp" type="password" id="au-pwd2"></div>
+      <div class="fg full"><div id="au-err" style="color:var(--red);font-size:12px;min-height:14px"></div></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-out" onclick="closeOv('ov-adduser')">Annuler</button>
+      <button class="btn btn-gold" onclick="saveUser()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MODAL DOCUMENT (DEVIS / FACTURE)
+═══════════════════════════════════════════ -->
+<div class="ov" id="ov-doc">
+  <div class="modal modal-xl">
+    <div class="mhead">
+      <span class="mtitle" id="doc-title">Nouveau document</span>
+      <button class="xbtn" onclick="closeOv('ov-doc')">×</button>
+    </div>
+    <div class="mbody">
+      <input type="hidden" id="doc-id"><input type="hidden" id="doc-type">
+      <div class="fg"><label>N° Document</label><input class="inp" id="doc-num" readonly style="background:var(--surface2);font-family:var(--mono)"></div>
+      <div class="fg"><label>Client *</label><select class="inp" id="doc-cli"></select></div>
+      <div class="fg"><label>Date d'émission *</label><input class="inp" type="date" id="doc-date"></div>
+      <div class="fg"><label id="doc-ech-lbl">Échéance</label><input class="inp" type="date" id="doc-ech"></div>
+      <div class="fg"><label>Statut</label><select class="inp" id="doc-statut"></select></div>
+      <div class="fg"><label>Date de paiement</label><input class="inp" type="date" id="doc-dpay"></div>
+      <div class="fg full"><label>Objet</label><input class="inp" id="doc-objet" placeholder="Ex: Prestation informatique · Installation réseau…"></div>
+      <div class="fg full"><label>Notes / Conditions de paiement</label><textarea class="inp" id="doc-notes" rows="2" placeholder="Ex: Paiement à 30 jours. TVA non applicable…"></textarea></div>
+      <div class="fg full" style="margin-top:4px">
+        <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:8px">Lignes de la commande</div>
+        <table class="itbl">
+          <thead><tr><th style="width:32%">Désignation</th><th style="width:9%">Qté</th><th style="width:13%">P.U. HT</th><th style="width:9%">TVA %</th><th style="width:12%">Total TTC</th><th style="width:19%">Catalogue</th><th style="width:6%"></th></tr></thead>
+          <tbody id="doc-items"></tbody>
+        </table>
+        <button class="btn btn-out btn-sm" onclick="addLine()" style="margin-top:6px">+ Ligne</button>
+        <div class="totbox">
+          <div class="trow"><span>Sous-total HT</span><span id="t-ht">0,00 MAD</span></div>
+          <div class="trow"><span>TVA</span><span id="t-tva">0,00 MAD</span></div>
+          <div class="trow grand"><span>TOTAL TTC</span><span id="t-ttc">0,00 MAD</span></div>
+          <div class="trow" style="margin-top:8px;padding-top:8px;border-top:1px dashed var(--border)"><span style="font-size:12px;color:var(--text3)">Marge brute HT</span><span id="t-marge" style="font-family:var(--mono);font-size:13px;font-weight:600">—</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-out" onclick="closeOv('ov-doc')">Annuler</button>
+      <button class="btn btn-gold" onclick="saveDoc()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CLIENT -->
+<div class="ov" id="ov-cli">
+  <div class="modal modal-lg">
+    <div class="mhead"><span class="mtitle" id="cli-title">Nouveau client</span><button class="xbtn" onclick="closeOv('ov-cli')">×</button></div>
+    <div class="mbody">
+      <input type="hidden" id="c-id">
+      <div class="fsec full"><div class="fsec-lbl">Identification</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Nom / Société *</label><input class="inp" id="c-nom"></div>
+      <div class="fg"><label>Contact</label><input class="inp" id="c-contact"></div>
+      <div class="fg"><label>ICE</label><div class="inp-group"><span class="ig">🔢</span><input class="inp" id="c-ice" placeholder="000000000000000" maxlength="15"></div></div>
+      <div class="fg"><label>IF (Identifiant Fiscal)</label><div class="inp-group"><span class="ig">🏛</span><input class="inp" id="c-if" placeholder="Ex: 12345678"></div></div>
+      <div class="fg"><label>RC (Registre Commerce)</label><div class="inp-group"><span class="ig">📋</span><input class="inp" id="c-rc" placeholder="Ex: 12345"></div></div>
+      <div class="fg"><label>CNSS</label><div class="inp-group"><span class="ig">🛡</span><input class="inp" id="c-cnss" placeholder="Ex: 1234567"></div></div>
+      <div class="fsec full"><div class="fsec-lbl">Coordonnées</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Email</label><input class="inp" type="email" id="c-email"></div>
+      <div class="fg"><label>Téléphone</label><input class="inp" id="c-tel"></div>
+      <div class="fg full"><label>Adresse</label><textarea class="inp" id="c-adr" rows="2"></textarea></div>
+      <div class="fg"><label>Ville</label><input class="inp" id="c-ville" value="Casablanca"></div>
+      <div class="fg"><label>Pays</label><input class="inp" id="c-pays" value="Maroc"></div>
+    </div>
+    <div class="mfoot"><button class="btn btn-out" onclick="closeOv('ov-cli')">Annuler</button><button class="btn btn-gold" onclick="saveCli()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- MODAL FOURNISSEUR -->
+<div class="ov" id="ov-four">
+  <div class="modal modal-lg">
+    <div class="mhead"><span class="mtitle" id="four-title">Nouveau fournisseur</span><button class="xbtn" onclick="closeOv('ov-four')">×</button></div>
+    <div class="mbody">
+      <input type="hidden" id="f-id">
+      <div class="fsec full"><div class="fsec-lbl">Identification</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Nom / Société *</label><input class="inp" id="f-nom"></div>
+      <div class="fg"><label>Contact</label><input class="inp" id="f-contact"></div>
+      <div class="fg"><label>ICE</label><div class="inp-group"><span class="ig">🔢</span><input class="inp" id="f-ice" placeholder="000000000000000" maxlength="15"></div></div>
+      <div class="fg"><label>IF (Identifiant Fiscal)</label><div class="inp-group"><span class="ig">🏛</span><input class="inp" id="f-if" placeholder="Ex: 12345678"></div></div>
+      <div class="fg"><label>RC</label><div class="inp-group"><span class="ig">📋</span><input class="inp" id="f-rc"></div></div>
+      <div class="fg"><label>Site web</label><input class="inp" id="f-web" placeholder="https://…"></div>
+      <div class="fsec full"><div class="fsec-lbl">Coordonnées</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Email</label><input class="inp" type="email" id="f-email"></div>
+      <div class="fg"><label>Téléphone</label><input class="inp" id="f-tel"></div>
+      <div class="fg full"><label>Adresse</label><textarea class="inp" id="f-adr" rows="2"></textarea></div>
+      <div class="fg"><label>Ville</label><input class="inp" id="f-ville" value="Casablanca"></div>
+      <div class="fg"><label>Pays</label><input class="inp" id="f-pays" value="Maroc"></div>
+      <div class="fg full"><label>Notes</label><textarea class="inp" id="f-notes" rows="2" placeholder="Délai livraison, conditions…"></textarea></div>
+    </div>
+    <div class="mfoot"><button class="btn btn-out" onclick="closeOv('ov-four')">Annuler</button><button class="btn btn-gold" onclick="saveFour()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- MODAL PRODUIT -->
+<div class="ov" id="ov-prod">
+  <div class="modal">
+    <div class="mhead"><span class="mtitle" id="prod-title">Nouveau produit</span><button class="xbtn" onclick="closeOv('ov-prod')">×</button></div>
+    <div class="mbody">
+      <input type="hidden" id="p-id">
+      <div class="fg full"><label>Désignation *</label><input class="inp" id="p-nom"></div>
+      <div class="fg"><label>Type</label><select class="inp" id="p-type"><option>Service</option><option>Produit</option><option>Licence</option><option>Forfait</option><option>Autre</option></select></div>
+      <div class="fg"><label>Unité</label><input class="inp" id="p-unite" placeholder="heure / unité / jour"></div>
+      <div class="fg"><label>Fournisseur</label><select class="inp" id="p-four"><option value="">— Aucun —</option></select></div>
+      <div class="fg"><label>Prix d'achat HT (MAD)</label><input class="inp" type="number" id="p-achat" step="0.01" placeholder="0.00" oninput="updMargePreview()"></div>
+      <div class="fg"><label>Prix de vente HT (MAD) *</label><input class="inp" type="number" id="p-prix" step="0.01" oninput="updMargePreview()"></div>
+      <div class="fg"><label>TVA (%)</label><select class="inp" id="p-tva"><option value="0">0%</option><option value="7">7%</option><option value="10">10%</option><option value="14">14%</option><option value="20" selected>20%</option></select></div>
+      <div class="fg" id="marge-preview" style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r2);padding:14px;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--text4);margin-bottom:6px;font-weight:700">Marge prévisionnelle</div>
+        <div id="mp-val" style="font-family:var(--head);font-size:20px;font-weight:700;color:var(--green)">— MAD</div>
+        <div id="mp-pct" style="font-size:12px;color:var(--text3);margin-top:2px">—%</div>
+      </div>
+      <div class="fg full"><label>Description</label><textarea class="inp" id="p-desc" rows="2"></textarea></div>
+    </div>
+    <div class="mfoot"><button class="btn btn-out" onclick="closeOv('ov-prod')">Annuler</button><button class="btn btn-gold" onclick="saveProd()">Enregistrer</button></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SHELL
+═══════════════════════════════════════════ -->
+<div class="shell">
+  <!-- RAIL -->
+  <aside class="rail">
+    <div class="brand">
+      <div class="brand-row">
+        <div class="brand-ico">🧾</div>
+        <div>
+          <div class="brand-name">FacturePro</div>
+          <div class="brand-sub">Auto-entrepreneur</div>
+        </div>
+      </div>
+    </div>
+    <nav class="nav">
+      <div class="nav-grp">Activité</div>
+      <button class="nav-item on" onclick="nav('dashboard')"><i class="ni">⊞</i>Tableau de bord</button>
+      <button class="nav-item" onclick="nav('devis')"><i class="ni">◱</i>Devis</button>
+      <button class="nav-item" onclick="nav('factures')"><i class="ni">◧</i>Factures</button>
+      <button class="nav-item" onclick="nav('interventions')"><i class="ni">🔧</i>Interventions</button>
+      <button class="nav-item" onclick="nav('marges')"><i class="ni">◎</i>Marges</button>
+      <div class="nav-grp">Base</div>
+      <button class="nav-item" onclick="nav('clients')"><i class="ni">◉</i>Clients</button>
+      <button class="nav-item" onclick="nav('fournisseurs')"><i class="ni">◍</i>Fournisseurs</button>
+      <button class="nav-item" onclick="nav('produits')"><i class="ni">◈</i>Produits</button>
+      <div class="nav-grp">Paramètres</div>
+      <button class="nav-item" onclick="nav('profil')"><i class="ni">👤</i>Mon profil</button>
+      <button class="nav-item" onclick="nav('bdd')"><i class="ni">⊡</i>Base de données</button>
+      <button class="nav-item" onclick="openOvGD()"><i class="ni">☁</i>Google Drive</button>
+      <button class="nav-item" id="nav-users" onclick="openUsersModal()"><i class="ni">👥</i>Utilisateurs</button>
+    </nav>
+    <div class="rail-foot">
+      <div class="rail-kv"><div class="rail-kv-l">Connecté</div><div class="rail-kv-v" id="sb-user">—</div></div>
+      <div class="rail-kv"><div class="rail-kv-l">CA encaissé</div><div class="rail-kv-v" id="sb-ca">0 MAD</div></div>
+      <div class="rail-kv"><div class="rail-kv-l">Marge nette</div><div class="rail-kv-v" id="sb-marge" style="color:#4ade80">0 MAD</div></div>
+      <div class="rail-kv"><div class="rail-kv-l">Devis actifs</div><div class="rail-kv-v" id="sb-devis">0</div></div>
+    </div>
+  </aside>
+
+  <!-- WORKSPACE -->
+  <div class="workspace">
+    <div class="topbar">
+      <div class="page-title" id="ptitle">Tableau de bord</div>
+      <div id="tbar-acts"></div>
+      <div class="user-pill" onclick="openUsersModal()">
+        <div class="uavatar" id="tb-avatar">A</div>
+        <span id="tb-user">—</span>
+      </div>
+      <button class="btn btn-out btn-sm" onclick="openOvGD()" title="Google Drive" style="padding:7px 10px;font-size:16px">☁</button>
+      <button class="btn-lock" onclick="lockApp()">🔒 <span>Verrouiller</span></button>
+    </div>
+    <!-- SYNC BAR -->
+    <div class="sync-bar" id="sync-bar">
+      <div class="sync-dot off" id="sync-dot"></div>
+      <span class="sync-label" id="sync-label">Google Drive : non connecté · <a href="#" onclick="openOvGD();return false" style="color:var(--blue);text-decoration:none">Connecter</a></span>
+      <button class="btn btn-out btn-sync" onclick="odUpload()" id="sync-btn" style="display:none">⬆ Sync</button>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="page on" id="pg-dashboard">
+        <div class="kpis">
+          <div class="kpi k-navy"><div class="kpi-l">Chiffre d'affaires</div><div class="kpi-v" id="k-ca">0</div><div class="kpi-s">MAD encaissé (factures payées)</div></div>
+          <div class="kpi k-em-green"><div class="kpi-l">Marge bénéficiaire</div><div class="kpi-v" id="k-marge">0</div><div class="kpi-s" id="k-marge-pct">MAD · 0%</div></div>
+          <div class="kpi k-gold"><div class="kpi-l">Factures en attente</div><div class="kpi-v" id="k-att">0</div><div class="kpi-s">à encaisser</div></div>
+          <div class="kpi k-blue"><div class="kpi-l">Devis en cours</div><div class="kpi-v" id="k-dev">0</div><div class="kpi-s">envoyés ou brouillons</div></div>
+        </div>
+        <div class="two-col">
+          <div class="card"><div class="card-head"><span class="card-title">Dernières factures</span></div>
+            <table><thead><tr><th>N°</th><th>Client</th><th>TTC</th><th>Marge</th><th>Statut</th></tr></thead><tbody id="d-inv"></tbody></table>
+          </div>
+          <div class="card"><div class="card-head"><span class="card-title">Devis récents</span></div>
+            <table><thead><tr><th>N°</th><th>Client</th><th>TTC</th><th>Marge</th><th>Statut</th></tr></thead><tbody id="d-quot"></tbody></table>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEVIS -->
+      <div class="page" id="pg-devis">
+        <div class="sbar">
+          <input class="inp inp-full" id="sq" placeholder="Rechercher…" oninput="renderDevis()">
+          <select class="inp" id="sq-st" style="width:160px" onchange="renderDevis()"><option value="">Tous statuts</option><option>Brouillon</option><option>Envoyé</option><option>Accepté</option><option>Refusé</option><option>Converti</option></select>
+        </div>
+        <div class="card"><div class="card-head"><span class="card-title">Devis</span><button class="btn btn-primary btn-sm" onclick="openDocModal('devis')">+ Nouveau devis</button></div>
+          <table><thead><tr><th>N° Devis</th><th>Client</th><th>Date</th><th>Validité</th><th>Montant TTC</th><th>Marge</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="t-devis"></tbody></table>
+        </div>
+      </div>
+
+      <!-- FACTURES -->
+      <div class="page" id="pg-factures">
+        <div class="sbar">
+          <input class="inp inp-full" id="sf" placeholder="Rechercher…" oninput="renderFact()">
+          <select class="inp" id="sf-st" style="width:160px" onchange="renderFact()"><option value="">Tous statuts</option><option>Brouillon</option><option>En attente</option><option>Payée</option><option>En retard</option></select>
+        </div>
+        <div class="card"><div class="card-head"><span class="card-title">Factures</span><button class="btn btn-primary btn-sm" onclick="openDocModal('facture')">+ Nouvelle facture</button></div>
+          <table><thead><tr><th>N° Facture</th><th>Client</th><th>Date</th><th>Échéance</th><th>Montant TTC</th><th>Marge</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="t-fact"></tbody></table>
+        </div>
+      </div>
+
+      <!-- INTERVENTIONS -->
+      <div class="page" id="pg-interventions">
+        <div class="sbar">
+          <input class="inp inp-full" id="si" placeholder="Rechercher par n°, client, type…" oninput="renderInter()">
+          <select class="inp" id="si-st" style="width:160px" onchange="renderInter()">
+            <option value="">Tous les statuts</option>
+            <option>En cours</option>
+            <option>Terminée</option>
+            <option>En attente</option>
+            <option>Annulée</option>
+          </select>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span class="card-title">Fiches d'intervention</span>
+            <button class="btn btn-primary btn-sm" onclick="openInterModal()">+ Nouvelle intervention</button>
+          </div>
+          <table>
+            <thead><tr><th>N° Fiche</th><th>Client</th><th>Date</th><th>Type</th><th>Matériel</th><th>Technicien</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="t-inter"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MARGES -->
+      <div class="page" id="pg-marges">
+        <div class="kpis" id="marge-kpis"></div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">Analyse par facture</span>
+            <select class="inp btn-sm" id="mf" onchange="renderMarges()" style="width:170px"><option value="all">Toutes les factures</option><option value="paid">Payées uniquement</option></select>
+          </div>
+          <table><thead><tr><th>N° Facture</th><th>Client</th><th>Date</th><th>CA TTC</th><th>Coût achat</th><th>Marge brute</th><th>Taux</th><th>Statut</th></tr></thead><tbody id="t-marges"></tbody></table>
+        </div>
+      </div>
+
+      <!-- CLIENTS -->
+      <div class="page" id="pg-clients">
+        <div class="sbar">
+          <input class="inp inp-full" id="sc" placeholder="Rechercher…" oninput="renderCli()">
+          <button class="btn btn-primary" onclick="openCliModal()">+ Nouveau client</button>
+        </div>
+        <div class="card"><table><thead><tr><th>Nom / Société</th><th>ICE</th><th>IF</th><th>Email</th><th>Téléphone</th><th>Docs</th><th>Actions</th></tr></thead><tbody id="t-cli"></tbody></table></div>
+      </div>
+
+      <!-- FOURNISSEURS -->
+      <div class="page" id="pg-fournisseurs">
+        <div class="sbar">
+          <input class="inp inp-full" id="sfour" placeholder="Rechercher…" oninput="renderFour()">
+          <button class="btn btn-primary" onclick="openFourModal()">+ Nouveau fournisseur</button>
+        </div>
+        <div class="card"><table><thead><tr><th>Nom / Société</th><th>ICE</th><th>IF</th><th>Contact</th><th>Téléphone</th><th>Produits</th><th>Actions</th></tr></thead><tbody id="t-four"></tbody></table></div>
+      </div>
+
+      <!-- PRODUITS -->
+      <div class="page" id="pg-produits">
+        <div class="sbar">
+          <input class="inp inp-full" id="sp" placeholder="Rechercher…" oninput="renderProd()">
+          <button class="btn btn-primary" onclick="openProdModal()">+ Nouveau produit</button>
+        </div>
+        <div class="card"><table><thead><tr><th>Désignation</th><th>Fournisseur</th><th>Type</th><th>Prix achat HT</th><th>Prix vente HT</th><th>TVA</th><th>Marge</th><th>Actions</th></tr></thead><tbody id="t-prod"></tbody></table></div>
+      </div>
+
+      <!-- PROFIL -->
+      <div class="page" id="pg-profil">
+        <div class="profile-banner">
+          <div class="profile-banner-left">
+            <div class="profile-big-avatar" id="prof-avatar">A</div>
+            <div>
+              <div class="profile-banner-name" id="prof-name">—</div>
+              <div class="profile-banner-type" id="prof-type">Auto-entrepreneur · Maroc</div>
+              <div class="profile-id-row" id="prof-chips"></div>
+            </div>
+          </div>
+          <button class="btn btn-gold" onclick="openProfil()">✎ Modifier le profil</button>
+        </div>
+        <div class="profile-grid" id="prof-grid"></div>
+      </div>
+
+      <!-- BDD -->
+      <div class="page" id="pg-bdd">
+
+        <!-- GOOGLE DRIVE CARD -->
+        <div class="io-card" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac;margin-bottom:16px">
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+            <img src="https://ssl.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png" style="width:44px;height:44px;border-radius:10px" onerror="this.textContent='🟢';this.style.fontSize='32px'">
+            <div>
+              <h3 style="color:#166534;margin-bottom:2px">Google Drive</h3>
+              <p style="font-size:12px;color:#16a34a;margin:0" id="gd-status-sub">Non connecté — cliquez pour vous connecter</p>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+              <div class="sync-dot off" id="gd-dot" style="width:10px;height:10px"></div>
+              <span id="gd-status-text" style="font-size:12px;color:var(--text3)">Déconnecté</span>
+            </div>
+          </div>
+
+          <!-- Non connecté -->
+          <div id="gd-not-conn">
+            <p style="font-size:13px;color:#166534;margin-bottom:14px;line-height:1.7">
+              Connectez votre <strong>compte Google</strong> pour sauvegarder et restaurer votre base de données directement sur <strong>Google Drive</strong>. Accédez à vos données depuis votre téléphone et votre PC.
+            </p>
+            <button class="btn btn-success" onclick="gdSignIn()" style="width:100%;justify-content:center;padding:12px;font-size:14px">
+              <svg width="18" height="18" viewBox="0 0 24 24" style="flex-shrink:0"><path fill="#fff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#fff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#fff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Se connecter avec Google
+            </button>
+          </div>
+
+          <!-- Connecté -->
+          <div id="gd-conn" style="display:none">
+            <div style="display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #86efac;border-radius:var(--r);padding:12px 14px;margin-bottom:14px">
+              <img id="gd-photo" src="" style="width:36px;height:36px;border-radius:50%;object-fit:cover" onerror="this.style.display='none'">
+              <div>
+                <div id="gd-name" style="font-weight:600;font-size:13px;color:#166534"></div>
+                <div id="gd-email" style="font-size:11px;color:#16a34a"></div>
+              </div>
+              <button class="btn btn-out btn-xs" onclick="gdSignOut()" style="margin-left:auto;color:var(--red)">Déconnecter</button>
+            </div>
+            <div id="gd-last-sync" style="font-size:12px;color:var(--text3);margin-bottom:12px"></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn btn-success" onclick="gdSave()">⬆ Sauvegarder sur Drive</button>
+              <button class="btn btn-out" onclick="gdLoad()">⬇ Restaurer depuis Drive</button>
+            </div>
+          </div>
+
+          <!-- Auto-sync -->
+          <div style="margin-top:14px;padding-top:14px;border-top:1px solid #86efac">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;text-transform:none;letter-spacing:0;font-size:13px;color:#166534;font-weight:500">
+              <input type="checkbox" id="gd-autosave" style="accent-color:#16a34a;width:16px;height:16px" onchange="toggleAutoSave()">
+              Sauvegarde automatique toutes les
+              <select id="gd-autosave-interval" class="inp" style="width:auto;padding:3px 8px;font-size:12px;display:inline-block" onchange="toggleAutoSave()">
+                <option value="5" selected>5 min</option>
+                <option value="10">10 min</option>
+                <option value="30">30 min</option>
+              </select>
+            </label>
+            <div id="gd-autosave-status" style="font-size:11px;color:#16a34a;margin-top:4px;padding-left:24px"></div>
+          </div>
+        </div>
+
+        <!-- EXPORT LOCAL -->
+        <div class="io-card">
+          <h3>📤 Sauvegarde locale</h3>
+          <p>Télécharge un fichier <strong>facturepro.json</strong> sur votre appareil — utile comme sauvegarde supplémentaire.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-gold" onclick="exportDB()">⬇ Télécharger facturepro.json</button>
+            <button class="btn btn-out" onclick="exportCSV()">⬇ Rapport CSV (Excel)</button>
+          </div>
+          <div id="last-export-info" style="font-size:11px;color:var(--text3);margin-top:10px"></div>
+        </div>
+
+        <!-- IMPORT LOCAL -->
+        <div class="io-card">
+          <h3>📥 Importer un fichier local</h3>
+          <p>Chargez un fichier <strong>facturepro.json</strong> depuis votre appareil. <strong style="color:var(--red)">Attention :</strong> remplace les données actuelles.</p>
+          <div class="drop-zone" id="dz" onclick="document.getElementById('imp-f').click()" ondragover="dzOv(event)" ondragleave="dzLv()" ondrop="dzDp(event)">
+            <div style="font-size:36px">📂</div>
+            <p>Glissez <strong>facturepro.json</strong> ici ou <strong>cliquez pour choisir</strong></p>
+          </div>
+          <input type="file" id="imp-f" accept=".json" style="display:none" onchange="importDB(this)">
+        </div>
+
+        <!-- QR TRANSFER -->
+        <div class="io-card">
+          <h3>📲 Transfert rapide par QR Code</h3>
+          <p>Transférez vos données vers votre téléphone instantanément par QR Code.</p>
+          <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+            <button class="btn btn-primary" onclick="genQR()">Générer le QR Code</button>
+            <div id="qr-warn" style="font-size:12px;color:var(--text3);padding-top:8px">⚠️ Fonctionne mieux si la base est petite (moins de 50 enregistrements)</div>
+          </div>
+          <div id="qr-area" style="display:none;margin-top:16px;text-align:center">
+            <canvas id="qr-canvas" style="border-radius:8px;box-shadow:var(--sh)"></canvas>
+            <p style="font-size:12px;color:var(--text3);margin-top:8px">Scannez avec votre téléphone pour importer les données</p>
+          </div>
+        </div>
+
+        <!-- RÉSUMÉ -->
+        <div class="io-card">
+          <h3>📊 Résumé de la base</h3>
+          <div class="kpis" id="bdd-stats" style="margin-bottom:0;grid-template-columns:repeat(3,1fr)"></div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /workspace -->
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-nav">
+    <div class="mobile-nav-inner">
+      <button class="mnav-item on" id="mn-dashboard" onclick="navM('dashboard')"><span class="mni">⊞</span>Accueil</button>
+      <button class="mnav-item" id="mn-devis" onclick="navM('devis')"><span class="mni">◱</span>Devis</button>
+      <button class="mnav-item" id="mn-factures" onclick="navM('factures')"><span class="mni">◧</span>Factures</button>
+      <button class="mnav-item" id="mn-clients" onclick="navM('clients')"><span class="mni">◉</span>Clients</button>
+      <button class="mnav-item" id="mn-more" onclick="toggleMMore()"><span class="mni">⋯</span>Plus</button>
+    </div>
+  </nav>
+</div><!-- /shell -->
+
+<!-- MODAL FICHE D'INTERVENTION -->
+<div class="ov" id="ov-inter">
+  <div class="modal modal-xl">
+    <div class="mhead">
+      <span class="mtitle" id="inter-title">Nouvelle fiche d'intervention</span>
+      <button class="xbtn" onclick="closeOv('ov-inter')">×</button>
+    </div>
+    <div class="mbody">
+      <input type="hidden" id="int-id">
+
+      <div class="fsec full"><div class="fsec-lbl">Identification</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>N° Fiche</label><input class="inp" id="int-num" readonly style="background:var(--surface2);font-family:var(--mono)"></div>
+      <div class="fg"><label>Statut</label>
+        <select class="inp" id="int-statut">
+          <option>En cours</option><option>Terminée</option><option>En attente</option><option>Annulée</option>
+        </select>
+      </div>
+      <div class="fg"><label>Client *</label>
+        <select class="inp" id="int-cli">
+          <option value="">— Sélectionner ou créer —</option>
+        </select>
+      </div>
+      <div class="fg"><label>Nouveau client (si absent)</label>
+        <div style="display:flex;gap:8px">
+          <input class="inp" id="int-new-cli" placeholder="Nom du client rapide…" style="flex:1">
+          <button class="btn btn-out btn-sm" onclick="addQuickClient()">+ Ajouter</button>
+        </div>
+      </div>
+
+      <div class="fsec full"><div class="fsec-lbl">Planification</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Date d'intervention *</label><input class="inp" type="date" id="int-date"></div>
+      <div class="fg"><label>Heure de début</label><input class="inp" type="time" id="int-heure-debut"></div>
+      <div class="fg"><label>Heure de fin</label><input class="inp" type="time" id="int-heure-fin"></div>
+      <div class="fg"><label>Technicien</label><input class="inp" id="int-tech" placeholder="Anas Aftis"></div>
+      <div class="fg"><label>Lieu / Adresse</label><input class="inp" id="int-lieu" placeholder="Adresse d'intervention…"></div>
+      <div class="fg"><label>Type d'intervention</label>
+        <select class="inp" id="int-type">
+          <option>Maintenance préventive</option>
+          <option>Dépannage / Réparation</option>
+          <option>Installation</option>
+          <option>Configuration</option>
+          <option>Formation</option>
+          <option>Audit</option>
+          <option>Câblage réseau</option>
+          <option>Autre</option>
+        </select>
+      </div>
+
+      <div class="fsec full"><div class="fsec-lbl">Matériel & Problème</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Matériel / Équipement</label><input class="inp" id="int-materiel" placeholder="Ex: PC HP EliteBook, Imprimante Canon…"></div>
+      <div class="fg"><label>Marque / Modèle</label><input class="inp" id="int-modele" placeholder="Ex: HP, Dell, Cisco…"></div>
+      <div class="fg"><label>N° de série</label><input class="inp" id="int-serie" placeholder="Ex: 5CD12345ABC"></div>
+      <div class="fg"><label>Priorité</label>
+        <select class="inp" id="int-priorite">
+          <option>Normale</option><option>Urgente</option><option>Critique</option><option>Faible</option>
+        </select>
+      </div>
+      <div class="fg full"><label>Description du problème</label>
+        <textarea class="inp" id="int-probleme" rows="3" placeholder="Décrivez le problème signalé par le client…"></textarea>
+      </div>
+      <div class="fg full"><label>Travaux effectués / Solution</label>
+        <textarea class="inp" id="int-solution" rows="3" placeholder="Décrivez les actions effectuées et la solution apportée…"></textarea>
+      </div>
+      <div class="fg full"><label>Pièces remplacées / Fournitures</label>
+        <textarea class="inp" id="int-pieces" rows="2" placeholder="Ex: Disque dur 1TB, RAM 8GB, Câble RJ45…"></textarea>
+      </div>
+      <div class="fg"><label>Recommandations</label>
+        <textarea class="inp" id="int-recomm" rows="2" placeholder="Recommandations pour le client…"></textarea>
+      </div>
+      <div class="fg"><label>Observations</label>
+        <textarea class="inp" id="int-obs" rows="2" placeholder="Notes internes…"></textarea>
+      </div>
+
+      <div class="fsec full"><div class="fsec-lbl">Facturation</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Convertir en facture</label>
+        <div style="display:flex;align-items:center;gap:8px;padding:10px 0">
+          <input type="checkbox" id="int-to-fac" style="accent-color:var(--blue);width:16px;height:16px">
+          <label for="int-to-fac" style="text-transform:none;letter-spacing:0;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer">Créer une facture liée à cette intervention</label>
+        </div>
+      </div>
+      <div class="fg"><label>Montant HT (MAD)</label><input class="inp" type="number" id="int-montant" step="0.01" placeholder="0.00"></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn btn-out" onclick="closeOv('ov-inter')">Annuler</button>
+      <button class="btn btn-out" onclick="printInter()">⎙ Imprimer la fiche</button>
+      <button class="btn btn-gold" onclick="saveInter()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL PROFIL -->
+<div class="ov" id="ov-profil">
+  <div class="modal modal-lg">
+    <div class="mhead"><span class="mtitle">👤 Mon profil · Coordonnées fiscales</span><button class="xbtn" onclick="closeOv('ov-profil')">×</button></div>
+    <div class="mbody">
+      <div class="fsec full"><div class="fsec-lbl">Identité</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Nom complet *</label><input class="inp" id="pr-nom" placeholder="Anas Aftis"></div>
+      <div class="fg"><label>Activité / Métier</label><input class="inp" id="pr-metier" placeholder="Technicien Informatique"></div>
+      <div class="fsec full"><div class="fsec-lbl">Identifiants fiscaux</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>ICE</label><div class="inp-group"><span class="ig">🔢</span><input class="inp" id="pr-ice" placeholder="000000000000000" maxlength="15"></div></div>
+      <div class="fg"><label>IF (Identifiant Fiscal)</label><div class="inp-group"><span class="ig">🏛</span><input class="inp" id="pr-if" placeholder="Ex: 87654321"></div></div>
+      <div class="fg"><label>RC (Registre Commerce)</label><div class="inp-group"><span class="ig">📋</span><input class="inp" id="pr-rc"></div></div>
+      <div class="fg"><label>CNSS</label><div class="inp-group"><span class="ig">🛡</span><input class="inp" id="pr-cnss"></div></div>
+      <div class="fg"><label>Patente</label><div class="inp-group"><span class="ig">📜</span><input class="inp" id="pr-patente"></div></div>
+      <div class="fg"><label>N° TVA (si applicable)</label><div class="inp-group"><span class="ig">%</span><input class="inp" id="pr-tva" placeholder="MA…"></div></div>
+      <div class="fsec full"><div class="fsec-lbl">Coordonnées</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Email</label><input class="inp" type="email" id="pr-email"></div>
+      <div class="fg"><label>Téléphone</label><input class="inp" id="pr-tel"></div>
+      <div class="fg full"><label>Adresse</label><textarea class="inp" id="pr-adr" rows="2"></textarea></div>
+      <div class="fg"><label>Ville</label><input class="inp" id="pr-ville" value="Rabat"></div>
+      <div class="fg"><label>Pays</label><input class="inp" id="pr-pays" value="Maroc"></div>
+      <div class="fsec full"><div class="fsec-lbl">Banque (optionnel)</div><div class="fsec-line"></div></div>
+      <div class="fg"><label>Banque</label><input class="inp" id="pr-banque" placeholder="CIH, Attijariwafa…"></div>
+      <div class="fg"><label>RIB / IBAN</label><input class="inp" id="pr-rib" placeholder="MA…"></div>
+      <div class="fg full"><label>Mentions légales (pied de facture)</label><textarea class="inp" id="pr-mentions" rows="2" placeholder="Ex: Auto-entrepreneur dispensé de TVA conformément à l'article…"></textarea></div>
+    </div>
+    <div class="mfoot"><button class="btn btn-out" onclick="closeOv('ov-profil')">Annuler</button><button class="btn btn-gold" onclick="saveProfil()">Enregistrer le profil</button></div>
+  </div>
+</div>
+
+<!-- PRINT ZONE -->
+<div id="pzone"></div>
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  DATABASE
+// ═══════════════════════════════════════════════════════
+const DB_KEY = 'factPro_v4';
+let DB = (() => { try { return JSON.parse(localStorage.getItem(DB_KEY)) || mk(); } catch { return mk(); } })();
+
+function mk() {
+  return {
+    profil: { nom:'Anas Aftis', metier:'Technicien Informatique', ice:'', if:'', rc:'', cnss:'', patente:'', tva:'', email:'anas.aftis@email.com', tel:'', adr:'', ville:'Rabat', pays:'Maroc', banque:'', rib:'', mentions:'' },
+    clients:[], fournisseurs:[], produits:[], devis:[], factures:[], interventions:[],
+    users:[], auth:{ sessionDur:30 }, seq:{ d:1, f:1, i:1 }
+  };
+}
+function sv() { localStorage.setItem(DB_KEY, JSON.stringify(DB)); }
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function dnum() { return 'DEV-' + String(DB.seq.d).padStart(4,'0'); }
+function fnum() { return 'FAC-' + String(DB.seq.f).padStart(4,'0'); }
+
+// ═══════════════════════════════════════════════════════
+//  FORMAT
+// ═══════════════════════════════════════════════════════
+const fmn = n => Number(n||0).toLocaleString('fr-MA',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmt = n => fmn(n) + ' MAD';
+const fdt = d => d ? new Date(d+'T00:00:00').toLocaleDateString('fr-FR') : '—';
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function badge(s) {
+  const m = { 'Payée':'b-paid','En attente':'b-pend','En retard':'b-late','Brouillon':'b-draft','Envoyé':'b-sent','Accepté':'b-acc','Refusé':'b-ref','Converti':'b-conv' };
+  return `<span class="badge ${m[s]||'b-draft'}">${s}</span>`;
+}
+function notif(msg) {
+  const el = document.getElementById('notif');
+  el.textContent = msg; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 2600);
+}
+
+// ═══════════════════════════════════════════════════════
+//  AUTH / SESSION
+// ═══════════════════════════════════════════════════════
+const SK = 'factPro_ses_v4';
+let CU = null; // current user
+
+function hash(s) { let h=5381; for(let i=0;i<s.length;i++) h=((h<<5)+h)+s.charCodeAt(i); return (h>>>0).toString(36); }
+function ensureAdmin() {
+  if (!DB.users) DB.users=[];
+  if (!DB.users.find(u=>u.role==='admin'))
+    DB.users.unshift({id:uid(),name:'Anas Aftis',role:'admin',pwdHash:'',sessionDur:0,createdAt:new Date().toISOString()});
+}
+function getUsers() { return DB.users||[]; }
+function getGlobalDur() { return DB.auth?.sessionDur||30; }
+
+function saveSession(user) {
+  const dur = user.sessionDur||getGlobalDur();
+  const s = { uid:user.id, name:user.name, role:user.role, exp:Date.now()+dur*60000 };
+  sessionStorage.setItem(SK, JSON.stringify(s));
+  if (document.getElementById('lock-rem')?.checked) localStorage.setItem(SK, JSON.stringify(s));
+}
+function loadSession() {
+  for (const st of [sessionStorage,localStorage]) {
+    try {
+      const raw=st.getItem(SK); if(!raw) continue;
+      const s=JSON.parse(raw);
+      if (s&&s.exp>Date.now()) { const u=getUsers().find(u=>u.id===s.uid); if(u) return u; }
+      st.removeItem(SK);
+    } catch {}
+  }
+  return null;
+}
+function clearSession() { sessionStorage.removeItem(SK); localStorage.removeItem(SK); CU=null; }
+function sesRemain() {
+  for (const st of [sessionStorage,localStorage]) {
+    try { const s=JSON.parse(st.getItem(SK)||'{}'); if(s.exp>Date.now()) return Math.round((s.exp-Date.now())/60000); } catch {}
+  }
+  return 0;
+}
+
+// LOGIN
+function renderLogin() {
+  ensureAdmin();
+  const ul = document.getElementById('login-user-list');
+  ul.innerHTML = getUsers().map(u=>`
+    <div class="user-card" onclick="selUser('${u.id}')">
+      <div class="uav ${u.role==='admin'?'admin':''}">${u.name.charAt(0).toUpperCase()}</div>
+      <div style="flex:1"><div class="ucard-name">${u.name}</div><div class="ucard-role">${u.role==='admin'?'Administrateur':'Utilisateur'}</div></div>
+      <span style="color:rgba(255,255,255,.3);font-size:18px">›</span>
+    </div>`).join('');
+  document.getElementById('step-users').classList.add('on');
+  document.getElementById('step-pwd').classList.remove('on');
+}
+let selUid=null;
+function selUser(id) {
+  const u=getUsers().find(x=>x.id===id); if(!u) return;
+  selUid=id;
+  if (!u.pwdHash) { loginUser(u); return; }
+  document.getElementById('step-users').classList.remove('on');
+  document.getElementById('step-pwd').classList.add('on');
+  const av=document.getElementById('login-uav');
+  av.textContent=u.name.charAt(0).toUpperCase();
+  av.className='uav'+(u.role==='admin'?' admin':'');
+  document.getElementById('login-uname').textContent=u.name;
+  document.getElementById('login-urole').textContent=u.role==='admin'?'Administrateur':'Utilisateur';
+  document.getElementById('lock-pwd').value='';
+  document.getElementById('lock-err').textContent='';
+  document.getElementById('lock-pwd').focus();
+}
+function goBack() {
+  selUid=null;
+  document.getElementById('step-pwd').classList.remove('on');
+  document.getElementById('step-users').classList.add('on');
+  document.getElementById('lock-pwd').value='';
+}
+function unlock() {
+  const val=document.getElementById('lock-pwd').value;
+  const u=getUsers().find(x=>x.id===selUid);
+  if (!u) return;
+  if (!u.pwdHash||hash(val)===u.pwdHash) { loginUser(u); }
+  else {
+    document.getElementById('lock-err').textContent='❌ Mot de passe incorrect';
+    document.getElementById('lock-pwd').value='';
+    document.getElementById('lock-pwd').focus();
+    const b=document.querySelector('.lock-wrap');
+    b.style.transition='transform .08s';
+    ['translateX(-10px)','translateX(10px)',''].forEach((v,i)=>setTimeout(()=>b.style.transform=v,i*80));
+  }
+}
+function loginUser(u) {
+  CU=u; saveSession(u);
+  document.getElementById('lock-screen').classList.add('hidden');
+  document.getElementById('lock-pwd').value='';
+  updTopbar(); applyRoleUI(); renderSidebar();
+}
+function lockApp() {
+  clearSession();
+  document.getElementById('lock-screen').classList.remove('hidden');
+  renderLogin();
+}
+function updTopbar() {
+  if (!CU) return;
+  document.getElementById('tb-user').textContent=CU.name;
+  const av=document.getElementById('tb-avatar');
+  av.textContent=CU.name.charAt(0).toUpperCase();
+  av.className='uavatar'+(CU.role==='admin'?' admin':'');
+  document.getElementById('sb-user').textContent=CU.name;
+}
+function applyRoleUI() {
+  const isA=CU?.role==='admin';
+  ['sec-users-admin','sec-dur-admin'].forEach(id=>{ const el=document.getElementById(id); if(el) el.style.display=isA?'':'none'; });
+}
+
+// ═══════════════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════════════
+const TITLES={
+  dashboard:'Tableau de bord',devis:'Devis',factures:'Factures',
+  interventions:'Fiches d\'intervention',
+  marges:'Analyse des marges',clients:'Clients',fournisseurs:'Fournisseurs',
+  produits:'Produits & Services',profil:'Mon profil',bdd:'Base de données'
+};
+const NAV_ACTS={
+  devis:`<button class="btn btn-primary btn-sm" onclick="openDocModal('devis')">+ Nouveau devis</button>`,
+  factures:`<button class="btn btn-primary btn-sm" onclick="openDocModal('facture')">+ Nouvelle facture</button>`,
+  interventions:`<button class="btn btn-primary btn-sm" onclick="openInterModal()">+ Nouvelle intervention</button>`,
+  clients:`<button class="btn btn-primary btn-sm" onclick="openCliModal()">+ Nouveau client</button>`,
+  fournisseurs:`<button class="btn btn-primary btn-sm" onclick="openFourModal()">+ Nouveau fournisseur</button>`,
+  produits:`<button class="btn btn-primary btn-sm" onclick="openProdModal()">+ Nouveau produit</button>`,
+  profil:`<button class="btn btn-gold btn-sm" onclick="openProfil()">✎ Modifier</button>`,
+};
+function nav(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('on'));
+  document.getElementById('pg-'+id)?.classList.add('on');
+  const idx=Object.keys(TITLES).indexOf(id);
+  if (idx>=0) document.querySelectorAll('.nav-item')[idx]?.classList.add('on');
+  document.getElementById('ptitle').textContent=TITLES[id]||id;
+  document.getElementById('tbar-acts').innerHTML=NAV_ACTS[id]||'';
+  const r={dashboard:renderDash,devis:renderDevis,factures:renderFact,interventions:renderInter,marges:renderMarges,clients:renderCli,fournisseurs:renderFour,produits:renderProd,profil:renderProfil,bdd:renderBdd};
+  r[id]?.();
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODAL HELPERS
+// ═══════════════════════════════════════════════════════
+function openOv(id){document.getElementById(id).classList.add('on');}
+function closeOv(id){document.getElementById(id).classList.remove('on');}
+document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('on');}));
+
+// ═══════════════════════════════════════════════════════
+//  PROFIL
+// ═══════════════════════════════════════════════════════
+function openProfil() {
+  const p=DB.profil;
+  ['nom','metier','ice','if','rc','cnss','patente','tva','email','tel','adr','ville','pays','banque','rib','mentions']
+    .forEach(k=>{const el=document.getElementById('pr-'+k); if(el) el.value=p[k]||'';});
+  openOv('ov-profil');
+}
+function saveProfil() {
+  const p=DB.profil;
+  ['nom','metier','ice','if','rc','cnss','patente','tva','email','tel','adr','ville','pays','banque','rib','mentions']
+    .forEach(k=>{const el=document.getElementById('pr-'+k); if(el) p[k]=el.value.trim();});
+  sv(); closeOv('ov-profil'); renderProfil();
+  notif('✓ Profil enregistré');
+}
+
+function renderProfil() {
+  const p=DB.profil;
+  document.getElementById('prof-avatar').textContent=p.nom?.charAt(0)?.toUpperCase()||'A';
+  document.getElementById('prof-name').textContent=p.nom||'—';
+  document.getElementById('prof-type').textContent=(p.metier||'Auto-entrepreneur')+' · '+(p.ville||'Maroc');
+
+  // Chips ID
+  const chips=[
+    {l:'ICE',v:p.ice},{l:'IF',v:p.if},{l:'RC',v:p.rc},
+    {l:'CNSS',v:p.cnss},{l:'Patente',v:p.patente}
+  ].filter(c=>c.v);
+  document.getElementById('prof-chips').innerHTML=chips.length
+    ? chips.map(c=>`<div class="id-pill"><div class="id-pill-label">${c.l}</div><div class="id-pill-value">${c.v}</div></div>`).join('')
+    : '<div class="id-pill"><div class="id-pill-label" style="color:rgba(255,255,255,.3);font-style:italic">Aucun identifiant fiscal — cliquez "Modifier"</div></div>';
+
+  const V=(v,mono)=>v?`<span class="pf-value${mono?' mono':''}">${esc(v)}</span>`:`<span class="pf-value empty">Non renseigné</span>`;
+  document.getElementById('prof-grid').innerHTML=`
+    <div class="profile-card">
+      <div class="profile-card-title">🏛 Identifiants fiscaux</div>
+      <div class="profile-fields">
+        <div class="pf"><div class="pf-label">ICE</div>${V(p.ice,true)}</div>
+        <div class="pf"><div class="pf-label">IF (Identifiant Fiscal)</div>${V(p.if,true)}</div>
+        <div class="pf"><div class="pf-label">RC (Registre Commerce)</div>${V(p.rc,true)}</div>
+        <div class="pf"><div class="pf-label">CNSS</div>${V(p.cnss,true)}</div>
+        <div class="pf"><div class="pf-label">Patente</div>${V(p.patente,true)}</div>
+        <div class="pf"><div class="pf-label">N° TVA</div>${V(p.tva,true)}</div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <div class="profile-card-title">📞 Coordonnées</div>
+      <div class="profile-fields single">
+        <div class="pf"><div class="pf-label">Email</div>${V(p.email)}</div>
+        <div class="pf"><div class="pf-label">Téléphone</div>${V(p.tel)}</div>
+        <div class="pf"><div class="pf-label">Adresse</div>${V(p.adr)}</div>
+        <div class="pf"><div class="pf-label">Ville / Pays</div>${V((p.ville&&p.pays)?p.ville+', '+p.pays:'')}</div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <div class="profile-card-title">🏦 Informations bancaires</div>
+      <div class="profile-fields single">
+        <div class="pf"><div class="pf-label">Banque</div>${V(p.banque)}</div>
+        <div class="pf"><div class="pf-label">RIB / IBAN</div>${V(p.rib,true)}</div>
+      </div>
+    </div>
+    <div class="profile-card">
+      <div class="profile-card-title">📋 Mentions légales</div>
+      <div class="profile-fields single">
+        <div class="pf"><div class="pf-label">Pied de facture</div>${V(p.mentions)}</div>
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════
+//  CLIENTS
+// ═══════════════════════════════════════════════════════
+function openCliModal(id) {
+  document.getElementById('c-id').value=id||'';
+  document.getElementById('cli-title').textContent=id?'Modifier le client':'Nouveau client';
+  const c=id?DB.clients.find(x=>x.id===id):{};
+  ['nom','contact','ice','if','rc','cnss','email','tel','adr','ville','pays']
+    .forEach(k=>{const el=document.getElementById('c-'+k); if(el) el.value=c?.[k]||(k==='pays'?'Maroc':k==='ville'?'Casablanca':'');});
+  openOv('ov-cli');
+}
+function saveCli() {
+  const nom=document.getElementById('c-nom').value.trim();
+  if (!nom){alert('Nom requis');return;}
+  const id=document.getElementById('c-id').value;
+  const o={id:id||uid()};
+  ['nom','contact','ice','if','rc','cnss','email','tel','adr','ville','pays'].forEach(k=>{const el=document.getElementById('c-'+k);if(el)o[k]=el.value;});
+  if(id){const i=DB.clients.findIndex(x=>x.id===id);DB.clients[i]=o;}else DB.clients.push(o);
+  sv();closeOv('ov-cli');renderCli();notif('✓ Client enregistré');
+}
+function renderCli() {
+  const q=(document.getElementById('sc')?.value||'').toLowerCase();
+  const list=DB.clients.filter(c=>c.nom.toLowerCase().includes(q)||(c.email||'').toLowerCase().includes(q));
+  const tb=document.getElementById('t-cli');
+  if(!list.length){tb.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="empty-ico">◉</div><p>Aucun client</p></div></td></tr>`;return;}
+  tb.innerHTML=list.map(c=>{
+    const nd=DB.devis.filter(d=>d.clientId===c.id).length;
+    const nf=DB.factures.filter(f=>f.clientId===c.id).length;
+    return `<tr>
+      <td><strong>${esc(c.nom)}</strong>${c.contact?`<br><span style="font-size:11px;color:var(--text3)">${esc(c.contact)}</span>`:''}</td>
+      <td style="font-family:var(--mono);font-size:12px">${c.ice||'—'}</td>
+      <td style="font-family:var(--mono);font-size:12px">${c.if||'—'}</td>
+      <td>${c.email||'—'}</td><td>${c.tel||'—'}</td>
+      <td><span class="badge b-draft">${nd}D</span> <span class="badge b-pend">${nf}F</span></td>
+      <td><div class="acts">
+        <button class="btn btn-out btn-xs" onclick="openCliModal('${c.id}')">✎</button>
+        <button class="btn btn-danger btn-xs" onclick="delCli('${c.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function delCli(id){if(!confirm('Supprimer ce client ?'))return;DB.clients=DB.clients.filter(c=>c.id!==id);sv();renderCli();}
+
+// ═══════════════════════════════════════════════════════
+//  FOURNISSEURS
+// ═══════════════════════════════════════════════════════
+function openFourModal(id) {
+  document.getElementById('f-id').value=id||'';
+  document.getElementById('four-title').textContent=id?'Modifier le fournisseur':'Nouveau fournisseur';
+  const f=id?DB.fournisseurs.find(x=>x.id===id):{};
+  ['nom','contact','ice','if','rc','web','email','tel','adr','ville','pays','notes']
+    .forEach(k=>{const el=document.getElementById('f-'+k); if(el) el.value=f?.[k]||(k==='pays'?'Maroc':k==='ville'?'Casablanca':'');});
+  openOv('ov-four');
+}
+function saveFour() {
+  const nom=document.getElementById('f-nom').value.trim();
+  if (!nom){alert('Nom requis');return;}
+  const id=document.getElementById('f-id').value;
+  const o={id:id||uid()};
+  ['nom','contact','ice','if','rc','web','email','tel','adr','ville','pays','notes'].forEach(k=>{const el=document.getElementById('f-'+k);if(el)o[k]=el.value;});
+  if(id){const i=DB.fournisseurs.findIndex(x=>x.id===id);DB.fournisseurs[i]=o;}else DB.fournisseurs.push(o);
+  sv();closeOv('ov-four');renderFour();notif('✓ Fournisseur enregistré');
+}
+function renderFour() {
+  const q=(document.getElementById('sfour')?.value||'').toLowerCase();
+  const list=DB.fournisseurs.filter(f=>f.nom.toLowerCase().includes(q));
+  const tb=document.getElementById('t-four');
+  if(!list.length){tb.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="empty-ico">◍</div><p>Aucun fournisseur</p></div></td></tr>`;return;}
+  tb.innerHTML=list.map(f=>{
+    const np=DB.produits.filter(p=>p.fourId===f.id).length;
+    return `<tr>
+      <td><strong>${esc(f.nom)}</strong>${f.web?`<br><a href="${f.web}" target="_blank" style="font-size:11px;color:var(--blue)">${f.web}</a>`:''}</td>
+      <td style="font-family:var(--mono);font-size:12px">${f.ice||'—'}</td>
+      <td style="font-family:var(--mono);font-size:12px">${f.if||'—'}</td>
+      <td>${f.contact||'—'}</td><td>${f.tel||'—'}</td>
+      <td><span class="badge b-draft">${np} produit${np>1?'s':''}</span></td>
+      <td><div class="acts">
+        <button class="btn btn-out btn-xs" onclick="openFourModal('${f.id}')">✎</button>
+        <button class="btn btn-danger btn-xs" onclick="delFour('${f.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function delFour(id){if(!confirm('Supprimer ce fournisseur ?'))return;DB.fournisseurs=DB.fournisseurs.filter(f=>f.id!==id);sv();renderFour();}
+
+// ═══════════════════════════════════════════════════════
+//  PRODUITS
+// ═══════════════════════════════════════════════════════
+function openProdModal(id) {
+  document.getElementById('p-four').innerHTML='<option value="">— Aucun —</option>'+
+    DB.fournisseurs.map(f=>`<option value="${f.id}">${esc(f.nom)}</option>`).join('');
+  document.getElementById('p-id').value=id||'';
+  document.getElementById('prod-title').textContent=id?'Modifier le produit':'Nouveau produit';
+  const p=id?DB.produits.find(x=>x.id===id):{};
+  document.getElementById('p-nom').value=p?.nom||'';
+  document.getElementById('p-type').value=p?.type||'Service';
+  document.getElementById('p-unite').value=p?.unite||'';
+  document.getElementById('p-four').value=p?.fourId||'';
+  document.getElementById('p-achat').value=p?.achat||'';
+  document.getElementById('p-prix').value=p?.prix||'';
+  document.getElementById('p-tva').value=p?.tva??20;
+  document.getElementById('p-desc').value=p?.desc||'';
+  updMargePreview();
+  openOv('ov-prod');
+}
+function updMargePreview() {
+  const a=parseFloat(document.getElementById('p-achat').value)||0;
+  const v=parseFloat(document.getElementById('p-prix').value)||0;
+  const m=v-a; const pct=v>0?(m/v*100):0;
+  const c=m>0?'var(--green)':m<0?'var(--red)':'var(--text3)';
+  document.getElementById('mp-val').style.color=c;
+  document.getElementById('mp-val').textContent=(a>0||v>0)?fmn(m)+' MAD':'— MAD';
+  document.getElementById('mp-pct').textContent=(a>0||v>0)?pct.toFixed(1)+'%':'—%';
+}
+function saveProd() {
+  const nom=document.getElementById('p-nom').value.trim();
+  const prix=parseFloat(document.getElementById('p-prix').value);
+  if(!nom||isNaN(prix)){alert('Nom et prix requis');return;}
+  const id=document.getElementById('p-id').value;
+  const o={
+    id:id||uid(),nom,prix,
+    achat:parseFloat(document.getElementById('p-achat').value)||0,
+    fourId:document.getElementById('p-four').value,
+    type:document.getElementById('p-type').value,
+    unite:document.getElementById('p-unite').value,
+    tva:parseFloat(document.getElementById('p-tva').value),
+    desc:document.getElementById('p-desc').value
+  };
+  if(id){const i=DB.produits.findIndex(x=>x.id===id);DB.produits[i]=o;}else DB.produits.push(o);
+  sv();closeOv('ov-prod');renderProd();notif('✓ Produit enregistré');
+}
+function renderProd() {
+  const q=(document.getElementById('sp')?.value||'').toLowerCase();
+  const list=DB.produits.filter(p=>p.nom.toLowerCase().includes(q));
+  const tb=document.getElementById('t-prod');
+  if(!list.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-ico">◈</div><p>Aucun produit</p></div></td></tr>`;return;}
+  tb.innerHTML=list.map(p=>{
+    const m=p.prix-(p.achat||0); const pct=p.prix>0?(m/p.prix*100):0;
+    const mc=m>0?'var(--green)':m<0?'var(--red)':'var(--text3)';
+    const four=DB.fournisseurs.find(f=>f.id===p.fourId);
+    return `<tr>
+      <td><strong>${esc(p.nom)}</strong>${p.desc?`<br><span style="font-size:11px;color:var(--text3)">${esc(p.desc)}</span>`:''}</td>
+      <td>${four?`<span class="badge b-sent">${esc(four.nom)}</span>`:'—'}</td>
+      <td><span class="badge b-draft">${p.type}</span></td>
+      <td style="font-family:var(--mono)">${p.achat>0?fmn(p.achat)+' MAD':'—'}</td>
+      <td style="font-family:var(--mono)">${fmn(p.prix)} MAD</td>
+      <td>${p.tva}%</td>
+      <td style="font-family:var(--mono);color:${mc};font-weight:600">${p.achat>0?fmn(m)+' MAD ('+pct.toFixed(1)+'%)':'—'}</td>
+      <td><div class="acts">
+        <button class="btn btn-out btn-xs" onclick="openProdModal('${p.id}')">✎</button>
+        <button class="btn btn-danger btn-xs" onclick="delProd('${p.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function delProd(id){if(!confirm('Supprimer ?'))return;DB.produits=DB.produits.filter(p=>p.id!==id);sv();renderProd();}
+
+// ═══════════════════════════════════════════════════════
+//  DOCUMENT (DEVIS / FACTURE)
+// ═══════════════════════════════════════════════════════
+let LINES=[];
+
+function openDocModal(type, editId) {
+  LINES=[];
+  document.getElementById('doc-type').value=type;
+  document.getElementById('doc-id').value=editId||'';
+  const isD=type==='devis';
+  document.getElementById('doc-title').textContent=editId?(isD?'Modifier le devis':'Modifier la facture'):(isD?'Nouveau devis':'Nouvelle facture');
+  document.getElementById('doc-ech-lbl').textContent=isD?'Valide jusqu\'au':'Date d\'échéance';
+  const stats=isD?['Brouillon','Envoyé','Accepté','Refusé','Converti']:['Brouillon','En attente','Payée','En retard'];
+  document.getElementById('doc-statut').innerHTML=stats.map(s=>`<option>${s}</option>`).join('');
+  document.getElementById('doc-cli').innerHTML='<option value="">— Sélectionner —</option>'+
+    DB.clients.map(c=>`<option value="${c.id}">${esc(c.nom)}</option>`).join('');
+  if (editId) {
+    const arr=isD?DB.devis:DB.factures;
+    const d=arr.find(x=>x.id===editId); if(!d) return;
+    document.getElementById('doc-num').value=d.numero;
+    document.getElementById('doc-cli').value=d.clientId;
+    document.getElementById('doc-date').value=d.date;
+    document.getElementById('doc-ech').value=d.ech||'';
+    document.getElementById('doc-statut').value=d.statut;
+    document.getElementById('doc-dpay').value=d.dpay||'';
+    document.getElementById('doc-objet').value=d.objet||'';
+    document.getElementById('doc-notes').value=d.notes||'';
+    LINES=JSON.parse(JSON.stringify(d.lines));
+  } else {
+    document.getElementById('doc-num').value=isD?dnum():fnum();
+    const td=new Date().toISOString().split('T')[0];
+    document.getElementById('doc-date').value=td;
+    const due=new Date(); due.setDate(due.getDate()+(isD?15:30));
+    document.getElementById('doc-ech').value=due.toISOString().split('T')[0];
+    document.getElementById('doc-statut').value='Brouillon';
+    document.getElementById('doc-dpay').value='';
+    document.getElementById('doc-objet').value='';
+    document.getElementById('doc-notes').value='';
+    addLine();
+  }
+  renderLines(); openOv('ov-doc');
+}
+
+function addLine(it) { LINES.push(it||{id:uid(),prodId:'',des:'',qte:1,pu:0,pa:0,tva:20}); renderLines(); }
+
+function renderLines() {
+  const po=DB.produits.map(p=>`<option value="${p.id}">${esc(p.nom)}</option>`).join('');
+  document.getElementById('doc-items').innerHTML=LINES.map((l,i)=>`
+    <tr>
+      <td><input value="${esc(l.des)}" oninput="updL(${i},'des',this.value)" placeholder="Désignation"></td>
+      <td><input type="number" value="${l.qte}" min="0.5" step="0.5" oninput="updL(${i},'qte',+this.value)" style="text-align:right"></td>
+      <td><input type="number" value="${l.pu}" step="0.01" oninput="updL(${i},'pu',+this.value)" style="text-align:right"></td>
+      <td><select onchange="updL(${i},'tva',+this.value)">${[0,7,10,14,20].map(v=>`<option${l.tva==v?' selected':''}>${v}</option>`).join('')}</select></td>
+      <td style="text-align:right;font-family:var(--mono);font-size:12px">${fmn(l.qte*l.pu*(1+l.tva/100))}</td>
+      <td><select onchange="pickProd(${i},this.value)"><option value="">— catalogue —</option>${po}</select></td>
+      <td><button onclick="remL(${i})" style="background:none;border:none;cursor:pointer;color:var(--red);font-size:16px;padding:2px 6px">×</button></td>
+    </tr>`).join('');
+  calcTotals();
+}
+function updL(i,k,v){LINES[i][k]=v;calcTotals();}
+function remL(i){LINES.splice(i,1);renderLines();}
+function pickProd(i,pid) {
+  if(!pid)return;
+  const p=DB.produits.find(x=>x.id===pid); if(!p)return;
+  LINES[i]={...LINES[i],prodId:pid,des:p.nom,pu:p.prix,pa:p.achat||0,tva:p.tva};
+  renderLines();
+}
+function calcTotals() {
+  let ht=0,tva=0,cout=0;
+  LINES.forEach(l=>{const h=(l.qte||0)*(l.pu||0);ht+=h;tva+=h*(l.tva||0)/100;cout+=(l.qte||0)*(l.pa||0);});
+  document.getElementById('t-ht').textContent=fmt(ht);
+  document.getElementById('t-tva').textContent=fmt(tva);
+  document.getElementById('t-ttc').textContent=fmt(ht+tva);
+  const m=ht-cout; const pct=ht>0?(m/ht*100):0;
+  const mc=m>0?'var(--green)':m<0?'var(--red)':'var(--text3)';
+  const el=document.getElementById('t-marge');
+  if(el){el.style.color=mc;el.textContent=cout>0?fmt(m)+' ('+pct.toFixed(1)+'%)':'—';}
+}
+function calcDoc(ls) {
+  let ht=0,tva=0,cout=0;
+  ls.forEach(l=>{const h=(l.qte||0)*(l.pu||0);ht+=h;tva+=h*(l.tva||0)/100;cout+=(l.qte||0)*(l.pa||0);});
+  return {ht,tva,ttc:ht+tva,cout,marge:ht-cout,margePct:ht>0?((ht-cout)/ht*100):0};
+}
+function saveDoc() {
+  const cid=document.getElementById('doc-cli').value;
+  if(!cid){alert('Sélectionnez un client');return;}
+  if(!LINES.length||LINES.every(l=>!l.des)){alert('Ajoutez au moins une ligne');return;}
+  const type=document.getElementById('doc-type').value;
+  const {ht,tva,ttc,cout,marge,margePct}=calcDoc(LINES);
+  const eid=document.getElementById('doc-id').value;
+  const o={
+    id:eid||uid(),
+    numero:document.getElementById('doc-num').value,
+    clientId:cid,date:document.getElementById('doc-date').value,
+    ech:document.getElementById('doc-ech').value,
+    statut:document.getElementById('doc-statut').value,
+    dpay:document.getElementById('doc-dpay').value,
+    objet:document.getElementById('doc-objet').value,
+    notes:document.getElementById('doc-notes').value,
+    lines:JSON.parse(JSON.stringify(LINES)),
+    ht,tva,ttc,cout,marge,margePct,
+    createdAt:eid?undefined:new Date().toISOString()
+  };
+  const arr=type==='devis'?DB.devis:DB.factures;
+  if(eid){const i=arr.findIndex(x=>x.id===eid);o.createdAt=arr[i].createdAt;arr[i]=o;}
+  else{arr.push(o);type==='devis'?DB.seq.d++:DB.seq.f++;}
+  sv();closeOv('ov-doc');
+  type==='devis'?renderDevis():renderFact();
+  renderSidebar();notif('✓ Document enregistré');
+}
+function delDoc(type,id) {
+  if(!confirm('Supprimer ?'))return;
+  if(type==='devis')DB.devis=DB.devis.filter(d=>d.id!==id);
+  else DB.factures=DB.factures.filter(f=>f.id!==id);
+  sv();type==='devis'?renderDevis():renderFact();renderSidebar();
+}
+function convertDevis(id) {
+  const d=DB.devis.find(x=>x.id===id); if(!d)return;
+  if(!confirm(`Convertir ${d.numero} en facture ?`))return;
+  d.statut='Converti';
+  DB.factures.push({
+    id:uid(),numero:fnum(),clientId:d.clientId,date:new Date().toISOString().split('T')[0],
+    ech:'',statut:'En attente',dpay:'',objet:d.objet,notes:d.notes,
+    lines:JSON.parse(JSON.stringify(d.lines)),
+    ht:d.ht,tva:d.tva,ttc:d.ttc,cout:d.cout||0,marge:d.marge||0,margePct:d.margePct||0,
+    fromDevis:d.numero,createdAt:new Date().toISOString()
+  });
+  DB.seq.f++;sv();renderDevis();renderSidebar();notif('✓ Facture créée');
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER DEVIS / FACTURES
+// ═══════════════════════════════════════════════════════
+function renderDevis() {
+  const q=(document.getElementById('sq')?.value||'').toLowerCase();
+  const st=document.getElementById('sq-st')?.value||'';
+  const list=DB.devis.filter(d=>{
+    const c=DB.clients.find(x=>x.id===d.clientId);
+    return(d.numero.toLowerCase().includes(q)||(c&&c.nom.toLowerCase().includes(q)))&&(!st||d.statut===st);
+  }).reverse();
+  const tb=document.getElementById('t-devis');
+  if(!list.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-ico">◱</div><p>Aucun devis</p></div></td></tr>`;return;}
+  tb.innerHTML=list.map(d=>{
+    const c=DB.clients.find(x=>x.id===d.clientId);
+    const m=d.marge||0;const mc=m>0?'var(--green)':m<0?'var(--red)':'var(--text3)';
+    const can=d.statut==='Accepté'||d.statut==='Envoyé';
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:12px">${d.numero}</td>
+      <td><strong>${c?esc(c.nom):'—'}</strong></td>
+      <td>${fdt(d.date)}</td><td>${fdt(d.ech)}</td>
+      <td style="font-family:var(--mono)">${fmn(d.ttc)} MAD</td>
+      <td style="font-family:var(--mono);color:${mc};font-size:12px">${d.cout>0?fmn(m)+' MAD<br><span style="font-size:10px">'+((d.margePct||0).toFixed(1))+'%</span>':'—'}</td>
+      <td>${badge(d.statut)}</td>
+      <td><div class="acts">
+        <button class="btn btn-out btn-xs" onclick="printDoc('devis','${d.id}')">⎙</button>
+        <button class="btn btn-out btn-xs" onclick="openDocModal('devis','${d.id}')">✎</button>
+        ${can?`<button class="btn btn-success btn-xs" onclick="convertDevis('${d.id}')">→FAC</button>`:''}
+        <button class="btn btn-danger btn-xs" onclick="delDoc('devis','${d.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function renderFact() {
+  const q=(document.getElementById('sf')?.value||'').toLowerCase();
+  const st=document.getElementById('sf-st')?.value||'';
+  const list=DB.factures.filter(f=>{
+    const c=DB.clients.find(x=>x.id===f.clientId);
+    return(f.numero.toLowerCase().includes(q)||(c&&c.nom.toLowerCase().includes(q)))&&(!st||f.statut===st);
+  }).reverse();
+  const tb=document.getElementById('t-fact');
+  if(!list.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-ico">◧</div><p>Aucune facture</p></div></td></tr>`;return;}
+  tb.innerHTML=list.map(f=>{
+    const c=DB.clients.find(x=>x.id===f.clientId);
+    const m=f.marge||0;const mc=m>0?'var(--green)':m<0?'var(--red)':'var(--text3)';
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:12px">${f.numero}${f.fromDevis?`<br><span style="font-size:10px;color:var(--text3)">← ${f.fromDevis}</span>`:''}</td>
+      <td><strong>${c?esc(c.nom):'—'}</strong></td>
+      <td>${fdt(f.date)}</td><td>${fdt(f.ech)}</td>
+      <td style="font-family:var(--mono)">${fmn(f.ttc)} MAD</td>
+      <td style="font-family:var(--mono);color:${mc};font-size:12px">${f.cout>0?fmn(m)+' MAD<br><span style="font-size:10px">'+((f.margePct||0).toFixed(1))+'%</span>':'—'}</td>
+      <td>${badge(f.statut)}</td>
+      <td><div class="acts">
+        <button class="btn btn-out btn-xs" onclick="printDoc('facture','${f.id}')">⎙</button>
+        <button class="btn btn-out btn-xs" onclick="openDocModal('facture','${f.id}')">✎</button>
+        <button class="btn btn-danger btn-xs" onclick="delDoc('facture','${f.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  MARGES
+// ═══════════════════════════════════════════════════════
+function renderMarges() {
+  const f=document.getElementById('mf')?.value||'all';
+  const list=(f==='paid'?DB.factures.filter(x=>x.statut==='Payée'):[...DB.factures]).reverse();
+  const ca=list.reduce((s,x)=>s+(x.ttc||0),0);
+  const cout=list.reduce((s,x)=>s+(x.cout||0),0);
+  const marge=list.reduce((s,x)=>s+(x.marge||0),0);
+  const ht=list.reduce((s,x)=>s+(x.ht||0),0);
+  const pct=ht>0?(marge/ht*100):0;
+  document.getElementById('marge-kpis').innerHTML=`
+    <div class="kpi k-navy"><div class="kpi-l">CA TTC sélection</div><div class="kpi-v" style="font-size:20px">${fmn(ca)}</div><div class="kpi-s">MAD</div></div>
+    <div class="kpi k-blue"><div class="kpi-l">Coût d'achat</div><div class="kpi-v" style="font-size:20px;color:var(--red)">${fmn(cout)}</div><div class="kpi-s">MAD</div></div>
+    <div class="kpi k-em-green"><div class="kpi-l">Marge brute</div><div class="kpi-v" style="font-size:20px">${fmn(marge)}</div><div class="kpi-s">MAD</div></div>
+    <div class="kpi k-green"><div class="kpi-l">Taux de marge moyen</div><div class="kpi-v" style="font-size:20px">${pct.toFixed(1)}%</div><div class="kpi-s">sur CA HT</div></div>
+  `;
+  const tb=document.getElementById('t-marges');
+  if(!list.length){tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-ico">◎</div><p>Aucune donnée</p></div></td></tr>`;return;}
+  tb.innerHTML=list.map(f=>{
+    const c=DB.clients.find(x=>x.id===f.clientId);
+    const m=f.marge||0;const mp=f.margePct||0;
+    const mc=m>=0?'var(--green)':'var(--red)';
+    const bar=Math.min(Math.abs(mp),100);
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:12px">${f.numero}</td>
+      <td>${c?esc(c.nom):'—'}</td><td>${fdt(f.date)}</td>
+      <td style="font-family:var(--mono)">${fmn(f.ttc)} MAD</td>
+      <td style="font-family:var(--mono);color:var(--red)">${f.cout>0?fmn(f.cout)+' MAD':'—'}</td>
+      <td style="font-family:var(--mono);color:${mc};font-weight:600">${fmn(m)} MAD</td>
+      <td>
+        <div class="marge-bar-wrap">
+          <div class="marge-bar"><div class="marge-bar-fill" style="width:${bar}%;background:${mc}"></div></div>
+          <span style="font-family:var(--mono);font-size:12px;color:${mc};min-width:40px">${mp.toFixed(1)}%</span>
+        </div>
+      </td>
+      <td>${badge(f.statut)}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════
+function renderDash() {
+  const paid=DB.factures.filter(f=>f.statut==='Payée');
+  const ca=paid.reduce((s,f)=>s+(f.ttc||0),0);
+  const marge=paid.reduce((s,f)=>s+(f.marge||0),0);
+  const ht=paid.reduce((s,f)=>s+(f.ht||0),0);
+  const pct=ht>0?(marge/ht*100):0;
+  const att=DB.factures.filter(f=>f.statut==='En attente'||f.statut==='En retard').length;
+  const dev=DB.devis.filter(d=>d.statut==='Envoyé'||d.statut==='Brouillon').length;
+  document.getElementById('k-ca').textContent=fmn(ca);
+  document.getElementById('k-marge').textContent=fmn(marge);
+  document.getElementById('k-marge-pct').textContent=`MAD · ${pct.toFixed(1)}%`;
+  document.getElementById('k-att').textContent=att;
+  document.getElementById('k-dev').textContent=dev;
+  const ri=[...DB.factures].reverse().slice(0,5);
+  document.getElementById('d-inv').innerHTML=ri.length?ri.map(f=>{
+    const c=DB.clients.find(x=>x.id===f.clientId);
+    const m=f.marge||0;const mc=m>0?'var(--green)':m<0?'var(--red)':'var(--text3)';
+    return `<tr><td style="font-family:var(--mono);font-size:11px">${f.numero}</td><td>${c?esc(c.nom):'—'}</td><td style="font-family:var(--mono);font-size:12px">${fmn(f.ttc)}</td><td style="font-family:var(--mono);font-size:12px;color:${mc}">${f.cout>0?fmn(m):'—'}</td><td>${badge(f.statut)}</td></tr>`;
+  }).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--text4);padding:20px">Aucune facture</td></tr>`;
+  const rd=[...DB.devis].reverse().slice(0,5);
+  document.getElementById('d-quot').innerHTML=rd.length?rd.map(d=>{
+    const c=DB.clients.find(x=>x.id===d.clientId);
+    const m=d.marge||0;const mc=m>0?'var(--green)':m<0?'var(--red)':'var(--text3)';
+    return `<tr><td style="font-family:var(--mono);font-size:11px">${d.numero}</td><td>${c?esc(c.nom):'—'}</td><td style="font-family:var(--mono);font-size:12px">${fmn(d.ttc)}</td><td style="font-family:var(--mono);font-size:12px;color:${mc}">${d.cout>0?fmn(m):'—'}</td><td>${badge(d.statut)}</td></tr>`;
+  }).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--text4);padding:20px">Aucun devis</td></tr>`;
+}
+function renderSidebar() {
+  const paid=DB.factures.filter(f=>f.statut==='Payée');
+  const ca=paid.reduce((s,f)=>s+(f.ttc||0),0);
+  const marge=paid.reduce((s,f)=>s+(f.marge||0),0);
+  document.getElementById('sb-ca').textContent=fmn(ca)+' MAD';
+  document.getElementById('sb-marge').textContent=fmn(marge)+' MAD';
+  document.getElementById('sb-devis').textContent=DB.devis.filter(d=>d.statut==='Envoyé'||d.statut==='Brouillon').length;
+  updTopbar();
+}
+
+// ═══════════════════════════════════════════════════════
+//  BDD
+// ═══════════════════════════════════════════════════════
+function renderBdd() {
+  const ttcF=DB.factures.reduce((s,f)=>s+(f.ttc||0),0);
+  const ttcD=DB.devis.reduce((s,d)=>s+(d.ttc||0),0);
+  const mg=DB.factures.filter(f=>f.statut==='Payée').reduce((s,f)=>s+(f.marge||0),0);
+  document.getElementById('bdd-stats').innerHTML=`
+    <div class="kpi k-navy"><div class="kpi-l">Clients / Fournisseurs</div><div class="kpi-v">${DB.clients.length} / ${DB.fournisseurs.length}</div></div>
+    <div class="kpi k-blue"><div class="kpi-l">Devis (${DB.devis.length})</div><div class="kpi-v" style="font-size:18px">${fmn(ttcD)} MAD</div></div>
+    <div class="kpi k-em-green"><div class="kpi-l">Factures (${DB.factures.length}) · Marge</div><div class="kpi-v" style="font-size:18px">${fmn(ttcF)} MAD</div><div class="kpi-s">Marge encaissée : ${fmn(mg)} MAD</div></div>
+  `;
+}
+function exportDB(silent=false) {
+  const blob=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='facturepro.json';
+  a.click();URL.revokeObjectURL(a.href);
+  const now=new Date();
+  const el=document.getElementById('last-export-info');
+  if(el) el.textContent=`Dernière sauvegarde locale : ${now.toLocaleString('fr-FR')}`;
+  if(!silent) notif('✓ facturepro.json téléchargé');
+}
+function exportCSV() {
+  const rows=[['Type','N°','Client','Date','Échéance','Statut','HT','TVA','TTC','Coût','Marge','Marge%']];
+  [...DB.devis,...DB.factures].forEach(d=>{
+    const c=DB.clients.find(x=>x.id===d.clientId);
+    const type=DB.devis.find(x=>x.id===d.id)?'Devis':'Facture';
+    rows.push([type,d.numero,c?.nom||'',d.date,d.ech||'',d.statut,fmn(d.ht),fmn(d.tva),fmn(d.ttc),fmn(d.cout||0),fmn(d.marge||0),(d.margePct||0).toFixed(1)+'%']);
+  });
+  const csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(';')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`facturepro-rapport-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();URL.revokeObjectURL(a.href);
+  notif('✓ Rapport CSV exporté');
+}
+function importDB(input) {
+  const file=input.files[0]; if(!file)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    try {
+      const p=JSON.parse(e.target.result);
+      if(!p.clients||!p.factures) throw new Error('Format invalide');
+      if(!confirm(`Importer ?\n• ${p.clients.length} clients\n• ${p.fournisseurs?.length||0} fournisseurs\n• ${p.produits?.length||0} produits\n• ${p.devis?.length||0} devis\n• ${p.factures.length} factures\n\nLes données actuelles seront remplacées.`))return;
+      DB=p;
+      if(!DB.seq)DB.seq={d:1,f:1};
+      if(!DB.devis)DB.devis=[];
+      if(!DB.fournisseurs)DB.fournisseurs=[];
+      if(!DB.users)DB.users=[];
+      if(!DB.auth)DB.auth={sessionDur:30};
+      if(!DB.profil)DB.profil={nom:'Anas Aftis',ville:'Rabat',pays:'Maroc'};
+      sv();renderDash();renderSidebar();renderBdd();
+      ensureAdmin();notif('✓ Import réussi');
+    } catch(err){alert('Fichier invalide : '+err.message);}
+    input.value='';
+  };
+  r.readAsText(file);
+}
+function dzOv(e){e.preventDefault();document.getElementById('dz').classList.add('drag');}
+function dzLv(){document.getElementById('dz').classList.remove('drag');}
+function dzDp(e){
+  e.preventDefault();dzLv();
+  const f=e.dataTransfer.files[0];
+  if(!f||!f.name.endsWith('.json')){alert('.json requis');return;}
+  importDB({files:[f],value:''});
+}
+
+// ═══════════════════════════════════════════════════════
+//  USERS MODAL
+// ═══════════════════════════════════════════════════════
+function openUsersModal() {
+  applyRoleUI();
+  const el=document.getElementById('ses-dur'); if(el)el.value=getGlobalDur();
+  document.getElementById('session-info').textContent=CU?`${CU.name} · ${sesRemain()} min restantes`:'—';
+  renderUsersPanel();
+  ['pwd-old','pwd-new','pwd-conf'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('pwd-err').textContent='';
+  openOv('ov-users');
+}
+function renderUsersPanel() {
+  const us=getUsers();
+  document.getElementById('uc').textContent=`(${us.length})`;
+  document.getElementById('users-list').innerHTML=us.map(u=>`
+    <div class="user-row">
+      <div class="uavatar ${u.role==='admin'?'admin':''}" style="width:30px;height:30px;font-size:11px">${u.name.charAt(0).toUpperCase()}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:600">${esc(u.name)}</div>
+        <div style="font-size:11px;color:var(--text3)">${u.pwdHash?'Mot de passe défini':'Sans mot de passe'} · Session: ${u.sessionDur||'Globale'}</div>
+      </div>
+      <span class="ubadge ${u.role}">${u.role==='admin'?'Admin':'User'}</span>
+      <button class="btn btn-out btn-xs" onclick="openAddUser('${u.id}')">✎</button>
+      ${u.id!==CU?.id?`<button class="btn btn-danger btn-xs" onclick="delUser('${u.id}')">✕</button>`:'<span style="width:30px"></span>'}
+    </div>`).join('');
+}
+function openAddUser(id) {
+  document.getElementById('au-id').value=id||'';
+  document.getElementById('au-title').textContent=id?'Modifier l\'utilisateur':'Ajouter un utilisateur';
+  const u=id?getUsers().find(x=>x.id===id):{};
+  document.getElementById('au-name').value=u?.name||'';
+  document.getElementById('au-role').value=u?.role||'user';
+  document.getElementById('au-dur').value=u?.sessionDur||0;
+  document.getElementById('au-pwd').value='';
+  document.getElementById('au-pwd2').value='';
+  document.getElementById('au-err').textContent='';
+  closeOv('ov-users');openOv('ov-adduser');
+}
+function saveUser() {
+  const id=document.getElementById('au-id').value;
+  const name=document.getElementById('au-name').value.trim();
+  const role=document.getElementById('au-role').value;
+  const dur=parseInt(document.getElementById('au-dur').value)||0;
+  const pwd=document.getElementById('au-pwd').value;
+  const pwd2=document.getElementById('au-pwd2').value;
+  const err=document.getElementById('au-err');
+  err.textContent='';
+  if(!name){err.textContent='❌ Nom requis';return;}
+  if(pwd&&pwd.length<4){err.textContent='❌ Minimum 4 caractères';return;}
+  if(pwd&&pwd!==pwd2){err.textContent='❌ Mots de passe différents';return;}
+  if(!DB.users)DB.users=[];
+  if(id){
+    const i=DB.users.findIndex(u=>u.id===id);
+    DB.users[i]={...DB.users[i],name,role,sessionDur:dur};
+    if(pwd)DB.users[i].pwdHash=hash(pwd);
+    if(id===CU?.id){CU.name=name;CU.role=role;updTopbar();}
+  }else DB.users.push({id:uid(),name,role,pwdHash:pwd?hash(pwd):'',sessionDur:dur,createdAt:new Date().toISOString()});
+  sv();closeOv('ov-adduser');openOv('ov-users');renderUsersPanel();notif('✓ Utilisateur enregistré');
+}
+function delUser(id){
+  const u=getUsers().find(x=>x.id===id);
+  if(!u||!confirm(`Supprimer "${u.name}" ?`))return;
+  DB.users=DB.users.filter(x=>x.id!==id);sv();renderUsersPanel();notif('✓ Utilisateur supprimé');
+}
+function savePwd() {
+  const old=document.getElementById('pwd-old').value;
+  const nw=document.getElementById('pwd-new').value;
+  const cf=document.getElementById('pwd-conf').value;
+  const dur=parseInt(document.getElementById('ses-dur')?.value)||30;
+  const err=document.getElementById('pwd-err');err.textContent='';
+  if(!CU)return;
+  const u=DB.users.find(x=>x.id===CU.id);if(!u)return;
+  if(u.pwdHash&&hash(old)!==u.pwdHash){err.textContent='❌ Mot de passe actuel incorrect';return;}
+  if(nw.length<4){err.textContent='❌ Minimum 4 caractères';return;}
+  if(nw!==cf){err.textContent='❌ Les mots de passe ne correspondent pas';return;}
+  u.pwdHash=hash(nw);
+  if(!DB.auth)DB.auth={};
+  if(CU.role==='admin')DB.auth.sessionDur=dur;
+  sv();closeOv('ov-users');notif('✓ Mot de passe modifié');
+}
+
+// ═══════════════════════════════════════════════════════
+//  IMPRESSION
+// ═══════════════════════════════════════════════════════
+function printDoc(type,id) {
+  const doc=(type==='devis'?DB.devis:DB.factures).find(x=>x.id===id); if(!doc)return;
+  const c=DB.clients.find(x=>x.id===doc.clientId);
+  const p=DB.profil;
+  const isD=type==='devis';
+
+  // Chips identifiants émetteur
+  const senderIds=[
+    {l:'ICE',v:p.ice},{l:'IF',v:p.if},{l:'RC',v:p.rc},
+    {l:'CNSS',v:p.cnss},{l:'Patente',v:p.patente},{l:'TVA',v:p.tva}
+  ].filter(x=>x.v);
+
+  // Chips identifiants client
+  const cIds=[
+    {l:'ICE',v:c?.ice},{l:'IF',v:c?.if},{l:'RC',v:c?.rc},{l:'CNSS',v:c?.cnss}
+  ].filter(x=>x.v);
+
+  const statusStyle=isD?'background:#fef3c7;color:#92400e;border:1px solid #fcd34d':'background:#d1fae5;color:#065f46;border:1px solid #6ee7b7';
+
+  const zone=document.getElementById('pzone');
+  zone.innerHTML=`<div class="pinv">
+    <div class="pinv-header">
+      <div class="pinv-sender">
+        <div class="pinv-sender-name">${esc(p.nom||'Anas Aftis')}</div>
+        <div class="pinv-sender-detail">
+          ${p.metier?esc(p.metier)+'<br>':''}
+          ${p.adr?esc(p.adr)+', ':''}${p.ville?esc(p.ville)+'<br>':''}
+          ${p.email?esc(p.email)+'<br>':''}
+          ${p.tel?esc(p.tel):''}
+        </div>
+        ${senderIds.length?`<div class="pinv-ids">${senderIds.map(x=>`<div class="pinv-id-chip"><span>${x.l}</span>${esc(x.v)}</div>`).join('')}</div>`:''}
+        ${p.rib?`<div style="margin-top:6px;font-size:10px;color:#64748b">RIB : <span style="font-family:var(--mono)">${esc(p.rib)}</span>${p.banque?' · '+esc(p.banque):''}</div>`:''}
+      </div>
+      <div class="pinv-meta">
+        <div class="pinv-doc-type">${isD?'Devis':'Facture'}</div>
+        <div class="pinv-doc-num">${esc(doc.numero)}</div>
+        <div class="pinv-doc-dates">
+          <p>Date : <strong>${fdt(doc.date)}</strong></p>
+          ${doc.ech?`<p>${isD?'Valide jusqu\'au':'Échéance'} : <strong>${fdt(doc.ech)}</strong></p>`:''}
+        </div>
+      </div>
+    </div>
+    <div class="pinv-rule"></div>
+    <div class="pinv-bill-to">Adressé à</div>
+    <div class="pinv-client">
+      <strong>${c?esc(c.nom):'—'}</strong>
+      ${c?.contact?`<span>${esc(c.contact)}</span>`:''}
+      ${c?.adr?`<span>${esc(c.adr)}${c.ville?', '+esc(c.ville):''}</span>`:''}
+      ${c?.email?`<span>${esc(c.email)}</span>`:''}
+      ${c?.tel?`<span>${esc(c.tel)}</span>`:''}
+      ${cIds.length?`<div class="pinv-client-ids">${cIds.map(x=>`<span class="pinv-client-id">${x.l} : ${esc(x.v)}</span>`).join(' · ')}</div>`:''}
+    </div>
+    ${doc.objet?`<div class="pinv-objet"><strong>Objet :</strong> ${esc(doc.objet)}</div>`:''}
+    <table class="ptbl">
+      <thead><tr><th>Désignation</th><th style="text-align:center;width:60px">Qté</th><th style="text-align:right;width:100px">P.U. HT</th><th style="text-align:center;width:55px">TVA</th><th style="text-align:right;width:110px">Total TTC</th></tr></thead>
+      <tbody>${doc.lines.map(l=>`<tr>
+        <td>${esc(l.des)}</td>
+        <td style="text-align:center">${l.qte}</td>
+        <td style="text-align:right;font-family:var(--mono)">${fmn(l.pu)} MAD</td>
+        <td style="text-align:center">${l.tva}%</td>
+        <td style="text-align:right;font-family:var(--mono);font-weight:600">${fmn(l.qte*l.pu*(1+l.tva/100))} MAD</td>
+      </tr>`).join('')}</tbody>
+    </table>
+    <div class="ptotals">
+      <div class="prow"><span>Sous-total HT</span><span>${fmn(doc.ht)} MAD</span></div>
+      <div class="prow"><span>TVA</span><span>${fmn(doc.tva)} MAD</span></div>
+      <div class="prow grand"><span>TOTAL TTC</span><span>${fmn(doc.ttc)} MAD</span></div>
+    </div>
+    ${doc.notes?`<div class="pnotes"><strong>Notes / Conditions :</strong> ${esc(doc.notes)}</div>`:''}
+    ${p.mentions?`<div class="pnotes" style="margin-top:3mm;"><strong>Mentions légales :</strong> ${esc(p.mentions)}</div>`:''}
+    <div class="pfooter">
+      ${esc(p.nom||'Anas Aftis')} · ${p.metier||'Auto-entrepreneur'} · ${p.ville||'Maroc'}
+      ${p.email?' · '+esc(p.email):''}${p.tel?' · '+esc(p.tel):''}
+      ${senderIds.length?'<br>'+senderIds.map(x=>x.l+' : '+esc(x.v)).join(' · '):''}
+    </div>
+  </div>`;
+
+  document.querySelector('.shell').style.display='none';
+  document.querySelectorAll('.ov').forEach(o => o.style.display = 'none');
+  document.getElementById('notif').style.display = 'none';
+  zone.style.display='block';
+  window.print();
+  document.querySelector('.shell').style.display='flex';
+  document.querySelectorAll('.ov.on').forEach(o => o.style.display = 'flex');
+  document.getElementById('notif').style.display = '';
+  zone.style.display='none';
+  zone.innerHTML='';
+}
+
+// ═══════════════════════════════════════════════════════
+//  MOBILE NAV
+// ═══════════════════════════════════════════════════════
+function navM(id) {
+  nav(id);
+  closeMMore();
+  document.querySelectorAll('.mnav-item').forEach(b=>b.classList.remove('on'));
+  const btn=document.getElementById('mn-'+id);
+  if(btn) btn.classList.add('on');
+}
+function toggleMMore() {
+  document.getElementById('mnav-more').classList.toggle('on');
+}
+function closeMMore() {
+  document.getElementById('mnav-more').classList.remove('on');
+}
+document.addEventListener('click',e=>{
+  const mm=document.getElementById('mnav-more');
+  const btn=document.getElementById('mn-more');
+  if(mm.classList.contains('on')&&!mm.contains(e.target)&&!btn.contains(e.target))
+    mm.classList.remove('on');
+});
+
+// ═══════════════════════════════════════════════════════
+//  GOOGLE DRIVE API (Google Identity Services)
+// ═══════════════════════════════════════════════════════
+// Pour activer : console.cloud.google.com
+// → Activer "Google Drive API" → OAuth 2.0 Client ID → Web App
+// → Remplacez GD_CLIENT_ID par votre Client ID
+const GD_CLIENT_ID = '81708825753-f8g9soimki75qcsijkedkn27knpc69cv.apps.googleusercontent.com';
+const GD_SCOPES    = 'https://www.googleapis.com/auth/drive.file';
+const GD_FILENAME  = 'facturepro.json';
+const GD_KEY       = 'factPro_gd_v1';
+const AS_KEY       = 'factPro_autosave';
+
+let gdToken    = null;
+let gdFileId   = null;
+let gdUserInfo = null;
+let gdAutoTimer = null;
+
+function loadGIS() {
+  return new Promise((res, rej) => {
+    if (window.google?.accounts) { res(); return; }
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.onload = () => setTimeout(res, 300);
+    s.onerror = rej;
+    document.head.appendChild(s);
+  });
+}
+
+async function gdSignIn() {
+  if (GD_CLIENT_ID === 'VOTRE_CLIENT_ID.apps.googleusercontent.com') {
+    showGdSetupGuide(); return;
+  }
+  try {
+    await loadGIS();
+    const client = google.accounts.oauth2.initTokenClient({
+      client_id: GD_CLIENT_ID,
+      scope: GD_SCOPES,
+      ux_mode: 'popup',
+      callback: async (resp) => {
+        if (resp.error) { notif('❌ ' + resp.error); return; }
+        gdToken = resp.access_token;
+        const s = gdLoadState();
+        s.token = resp.access_token;
+        s.tokenExp = Date.now() + (resp.expires_in||3600) * 1000;
+        localStorage.setItem(GD_KEY, JSON.stringify(s));
+        await gdFetchUserInfo();
+        gdSaveState(); gdUpdateUI(true);
+        notif('✓ Connecté à Google Drive — synchronisation…');
+        await gdLoadSilent();
+      },
+      error_callback: (err) => {
+        notif('❌ Erreur : ' + (err.message||err.type||'inconnue'));
+      }
+    });
+    client.requestAccessToken({ prompt: 'consent' });
+  } catch(e) { notif('❌ ' + e.message); }
+}
+
+// Récupérer token valide (depuis cache ou renouvellement silencieux)
+async function gdGetValidToken() {
+  const s = gdLoadState();
+  // Token encore valide (marge 5 min)
+  if (s.token && s.tokenExp && (s.tokenExp - Date.now()) > 300000) {
+    gdToken = s.token;
+    return gdToken;
+  }
+  // Token expiré → renouvellement silencieux
+  if (s.user && GD_CLIENT_ID !== 'VOTRE_CLIENT_ID.apps.googleusercontent.com') {
+    try {
+      await loadGIS();
+      return new Promise((resolve) => {
+        const client = google.accounts.oauth2.initTokenClient({
+          client_id: GD_CLIENT_ID, scope: GD_SCOPES,
+          prompt: '', // Silencieux — pas de popup
+          login_hint: s.user.email,
+          callback: (resp) => {
+            if (resp.error || !resp.access_token) { resolve(null); return; }
+            gdToken = resp.access_token;
+            const st = gdLoadState();
+            st.token = resp.access_token;
+            st.tokenExp = Date.now() + (resp.expires_in||3600) * 1000;
+            localStorage.setItem(GD_KEY, JSON.stringify(st));
+            resolve(gdToken);
+          }
+        });
+        client.requestAccessToken();
+      });
+    } catch { return null; }
+  }
+  return null;
+}
+
+async function gdFetchUserInfo() {
+  if (!gdToken) return;
+  const r = await fetch('https://www.googleapis.com/oauth2/v3/userinfo',
+    { headers: { Authorization: `Bearer ${token || gdToken}` } });
+  if (r.ok) {
+    gdUserInfo = await r.json();
+    const el = document.getElementById('gd-name');    if(el) el.textContent = gdUserInfo.name||'—';
+    const em = document.getElementById('gd-email');   if(em) em.textContent = gdUserInfo.email||'—';
+    const ph = document.getElementById('gd-photo');   if(ph && gdUserInfo.picture) ph.src = gdUserInfo.picture;
+  }
+}
+
+function gdSaveState() {
+  const s = gdLoadState();
+  if (gdUserInfo) s.user = { name:gdUserInfo.name, email:gdUserInfo.email, picture:gdUserInfo.picture };
+  if (gdFileId)   s.fileId = gdFileId;
+  if (gdToken)    s.token  = gdToken;
+  localStorage.setItem(GD_KEY, JSON.stringify(s));
+}
+
+function gdLoadState() {
+  try {
+    const s = JSON.parse(localStorage.getItem(GD_KEY)||'{}');
+    if (s.fileId) gdFileId = s.fileId;
+    if (s.token && s.tokenExp && (s.tokenExp - Date.now()) > 300000) gdToken = s.token;
+    return s;
+  }
+  catch { return {}; }
+}
+
+function gdSignOut() {
+  if (!confirm('Se déconnecter de Google Drive ?')) return;
+  gdToken=null; gdFileId=null; gdUserInfo=null;
+  if (gdAutoTimer) clearInterval(gdAutoTimer);
+  localStorage.removeItem(GD_KEY);
+  gdUpdateUI(false);
+  updSyncBar('off','Google Drive : déconnecté');
+  notif('Déconnecté de Google Drive');
+}
+
+function gdUpdateUI(connected) {
+  const nc=document.getElementById('gd-not-conn');
+  const co=document.getElementById('gd-conn');
+  const dot=document.getElementById('gd-dot');
+  const st=document.getElementById('gd-status-text');
+  const sub=document.getElementById('gd-status-sub');
+  if (connected) {
+    if(nc) nc.style.display='none'; if(co) co.style.display='';
+    if(dot) dot.className='sync-dot ok';
+    const s=gdLoadState();
+    if (s.user) {
+      const n=document.getElementById('gd-name'); if(n) n.textContent=s.user.name||'—';
+      const e=document.getElementById('gd-email'); if(e) e.textContent=s.user.email||'—';
+      const p=document.getElementById('gd-photo'); if(p&&s.user.picture) p.src=s.user.picture;
+    }
+    if(st) st.textContent='Connecté';
+    if(sub) sub.textContent=s.user?.email||'Connecté';
+    const ls=document.getElementById('gd-last-sync');
+    if(ls) ls.textContent=s.lastSync?`Dernière sync : ${new Date(s.lastSync).toLocaleString('fr-FR')}`:'Jamais synchronisé';
+    updSyncBar('ok',`Google Drive : ${s.user?.name||'connecté'}`);
+    const sb=document.getElementById('sync-btn'); if(sb) sb.style.display='';
+  } else {
+    if(nc) nc.style.display=''; if(co) co.style.display='none';
+    if(dot) dot.className='sync-dot off';
+    if(st) st.textContent='Déconnecté';
+    if(sub) sub.textContent='Non connecté — cliquez pour vous connecter';
+    updSyncBar('off','Google Drive : non connecté');
+    const sb=document.getElementById('sync-btn'); if(sb) sb.style.display='none';
+  }
+}
+
+// تحميل تلقائي بدون confirmation بعد الاتصال
+async function gdLoadSilent() {
+  const token = gdToken || (gdLoadState().token);
+  if (!token) return;
+  try {
+    if (!gdFileId) await gdFindFile();
+    if (!gdFileId) {
+      // ما فيهش ملف على Drive — نحفظ البيانات الحالية تلقائياً
+      notif('✓ Connecté — sauvegarde initiale en cours…');
+      await gdSave();
+      return;
+    }
+    const r = await fetch(
+      `https://www.googleapis.com/drive/v3/files/${gdFileId}?alt=media`,
+      { headers: { Authorization: `Bearer ${token || gdToken}` } }
+    );
+    if (!r.ok) return;
+    const data = await r.json();
+    if (!data.clients || !data.factures) return;
+
+    // مقارنة عدد البيانات — نأخذ الأحدث
+    const localTotal = DB.clients.length + DB.factures.length + DB.devis.length;
+    const driveTotal = (data.clients?.length||0) + (data.factures?.length||0) + (data.devis?.length||0);
+
+    if (driveTotal > localTotal) {
+      // Drive أغنى — نستورد
+      DB = data;
+      if(!DB.seq) DB.seq={d:1,f:1};
+      if(!DB.devis) DB.devis=[];
+      if(!DB.fournisseurs) DB.fournisseurs=[];
+      if(!DB.users) DB.users=[];
+      if(!DB.profil) DB.profil={nom:'Anas Aftis',ville:'Rabat',pays:'Maroc'};
+      sv(); ensureAdmin(); renderDash(); renderSidebar();
+      notif('✓ Données restaurées depuis Google Drive');
+    } else if (localTotal > driveTotal) {
+      // Local plus riche — on sauvegarde sur Drive
+      await gdSave();
+    } else {
+      notif('✓ Google Drive : données synchronisées');
+    }
+    const now = new Date();
+    const s = JSON.parse(localStorage.getItem(GD_KEY)||'{}');
+    s.lastSync = now.toISOString();
+    localStorage.setItem(GD_KEY, JSON.stringify(s));
+    const ls = document.getElementById('gd-last-sync');
+    if(ls) ls.textContent = `Dernière sync : ${now.toLocaleString('fr-FR')}`;
+  } catch(e) { notif('⚠️ Drive : ' + e.message); }
+}
+
+
+async function gdFindFile() {
+  const token = gdToken || (gdLoadState().token);
+  if (!token) return null;
+  const r=await fetch(
+    `https://www.googleapis.com/drive/v3/files?q=name='${GD_FILENAME}' and trashed=false&fields=files(id,name)`,
+    { headers:{ Authorization:`Bearer ${token}` } });
+  if (!r.ok) return null;
+  const d=await r.json();
+  if (d.files?.length) { gdFileId=d.files[0].id; return gdFileId; }
+  return null;
+}
+
+async function gdSave() {
+  const token = await gdGetValidToken();
+  if (!token) { notif('🔒 Session expirée — reconnectez-vous à Google Drive'); gdUpdateUI(false); return; }
+  updSyncBar('spin','Google Drive : sauvegarde…');
+  const sb=document.getElementById('sync-btn'); if(sb) sb.disabled=true;
+  try {
+    const content=JSON.stringify(DB,null,2);
+    if (!gdFileId) await gdFindFile();
+    if (gdFileId) {
+      const r=await fetch(`https://www.googleapis.com/upload/drive/v3/files/${gdFileId}?uploadType=media`,
+        { method:'PATCH', headers:{ Authorization:`Bearer ${token}`, 'Content-Type':'application/json' }, body:content });
+      if (!r.ok) throw new Error('Erreur : '+r.status);
+    } else {
+      const meta=JSON.stringify({ name:GD_FILENAME, mimeType:'application/json' });
+      const form=new FormData();
+      form.append('metadata', new Blob([meta],{type:'application/json'}));
+      form.append('file', new Blob([content],{type:'application/json'}));
+      const cr=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',
+        { method:'POST', headers:{ Authorization:`Bearer ${token}` }, body:form });
+      if (!cr.ok) throw new Error('Erreur création : '+cr.status);
+      const fd=await cr.json(); gdFileId=fd.id;
+    }
+    const now=new Date();
+    const s=JSON.parse(localStorage.getItem(GD_KEY)||'{}');
+    s.lastSync=now.toISOString(); s.fileId=gdFileId;
+    localStorage.setItem(GD_KEY,JSON.stringify(s));
+    const ls=document.getElementById('gd-last-sync');
+    if(ls) ls.textContent=`Dernière sync : ${now.toLocaleString('fr-FR')}`;
+    updSyncBar('ok',`Google Drive : sync ${now.toLocaleTimeString('fr-FR')}`);
+    notif('✓ Sauvegardé sur Google Drive');
+  } catch(e) { updSyncBar('err','Google Drive : erreur'); notif('❌ '+e.message); }
+  if(sb) sb.disabled=false;
+}
+
+async function gdLoad() {
+  const token = await gdGetValidToken();
+  if (!token) { notif('🔒 Session expirée — reconnectez-vous à Google Drive'); gdUpdateUI(false); return; }
+  if (!confirm('Restaurer depuis Google Drive ? Les données locales seront remplacées.')) return;
+  updSyncBar('spin','Google Drive : téléchargement…');
+  try {
+    if (!gdFileId) await gdFindFile();
+    if (!gdFileId) throw new Error('Aucun fichier facturepro.json trouvé sur Drive');
+    const r=await fetch(`https://www.googleapis.com/drive/v3/files/${gdFileId}?alt=media`,
+      { headers:{ Authorization:`Bearer ${token}` } });
+    if (!r.ok) throw new Error('Erreur : '+r.status);
+    const data=await r.json();
+    if (!data.clients||!data.factures) throw new Error('Format invalide');
+    DB=data;
+    if(!DB.seq) DB.seq={d:1,f:1,i:1};
+    if(!DB.devis) DB.devis=[];
+    if(!DB.interventions) DB.interventions=[];
+    if(!DB.fournisseurs) DB.fournisseurs=[];
+    if(!DB.users) DB.users=[];
+    if(!DB.profil) DB.profil={nom:'Anas Aftis',ville:'Rabat',pays:'Maroc'};
+    sv(); ensureAdmin(); renderDash(); renderSidebar();
+    const now=new Date();
+    const s=JSON.parse(localStorage.getItem(GD_KEY)||'{}');
+    s.lastSync=now.toISOString();
+    localStorage.setItem(GD_KEY,JSON.stringify(s));
+    const ls=document.getElementById('gd-last-sync');
+    if(ls) ls.textContent=`Dernière sync : ${now.toLocaleString('fr-FR')}`;
+    updSyncBar('ok',`Google Drive : restauré ${now.toLocaleTimeString('fr-FR')}`);
+    notif('✓ Données restaurées depuis Google Drive');
+  } catch(e) { updSyncBar('err','Google Drive : '+e.message); notif('❌ '+e.message); }
+}
+
+function showGdSetupGuide() {
+  alert(
+    '📋 CONFIGURATION GOOGLE DRIVE (5 min, gratuit)\n\n' +
+    '1️⃣  console.cloud.google.com → Nouveau projet\n' +
+    '2️⃣  APIs & Services → Activer "Google Drive API"\n' +
+    '3️⃣  Identifiants → OAuth 2.0 Client ID → Application Web\n' +
+    '     Origines JS autorisées : ajoutez l\'URL de ce fichier HTML\n' +
+    '4️⃣  Copiez le Client ID et remplacez dans le code :\n' +
+    '     const GD_CLIENT_ID = \'VOTRE_CLIENT_ID.apps.googleusercontent.com\'\n\n' +
+    '✅ En attendant : utilisez Export JSON + QR Code !'
+  );
+}
+
+// ── AutoSave ──
+function toggleAutoSave() {
+  const cb=document.getElementById('gd-autosave');
+  const iv=document.getElementById('gd-autosave-interval');
+  const st=document.getElementById('gd-autosave-status');
+  if (!cb) return;
+  const enabled=cb.checked; const mins=parseInt(iv?.value||5);
+  localStorage.setItem(AS_KEY,JSON.stringify({enabled,mins}));
+  if (gdAutoTimer) clearInterval(gdAutoTimer);
+  if (enabled) {
+    gdAutoTimer=setInterval(()=>gdToken?gdSave():exportDB(true), mins*60000);
+    if(st) st.textContent=`✓ Actif — sauvegarde toutes les ${mins} min`;
+    updSyncBar('ok',`Sauvegarde auto : toutes les ${mins} min`);
+  } else {
+    if(st) st.textContent='';
+  }
+}
+
+function initAutoSave() {
+  try {
+    const s=JSON.parse(localStorage.getItem(AS_KEY)||'{}');
+    const cb=document.getElementById('gd-autosave');
+    const iv=document.getElementById('gd-autosave-interval');
+    if (cb&&s.enabled) { cb.checked=true; if(iv) iv.value=s.mins||5; toggleAutoSave(); }
+  } catch {}
+
+  // Restaurer état Google Drive depuis localStorage
+  const gds = gdLoadState();
+  if (gds.user) {
+    // Afficher UI connecté même si token expiré
+    gdUpdateUI(true);
+    // Si token encore valide → sync automatique silencieuse
+    if (gds.token && gds.tokenExp && (gds.tokenExp - Date.now()) > 300000) {
+      gdToken = gds.token;
+      // Sync silencieuse au démarrage
+      setTimeout(() => gdLoadSilent(), 1500);
+    } else if (gds.user) {
+      // Token expiré — afficher bouton reconnexion discret
+      const sl = document.getElementById('sync-label');
+      if (sl) sl.innerHTML = `Google Drive : session expirée · <a href="#" onclick="gdSignIn();return false" style="color:var(--blue);text-decoration:none">Reconnecter</a>`;
+      const dot = document.getElementById('sync-dot');
+      if (dot) dot.className = 'sync-dot err';
+    }
+  }
+}
+
+function openOvGD() { nav('bdd'); }
+
+function updSyncBar(state, label) {
+  const dot=document.getElementById('sync-dot');
+  const lbl=document.getElementById('sync-label');
+  if(dot) dot.className='sync-dot '+state;
+  if(lbl) lbl.textContent=label;
+  const btn=document.getElementById('sync-btn');
+  if(btn) btn.style.display=state!=='off'?'':'none';
+}
+
+// ── QR Code ──
+async function genQR() {
+  const area=document.getElementById('qr-area');
+  const canvas=document.getElementById('qr-canvas');
+  const warn=document.getElementById('qr-warn');
+  const json=JSON.stringify(DB);
+  if (json.length>2800) {
+    warn.innerHTML='⚠️ Base trop grande pour un QR Code. Utilisez Google Drive ou Export JSON.';
+    warn.style.color='var(--red)'; return;
+  }
+  if (!window.QRCode) {
+    await new Promise((res,rej)=>{
+      const s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+      s.onload=res; s.onerror=rej; document.head.appendChild(s);
+    });
+  }
+  const encoded=btoa(unescape(encodeURIComponent(json)));
+  const importUrl=location.href.split('#')[0]+'#import='+encoded;
+  area.style.display='block'; canvas.innerHTML='';
+  try {
+    new QRCode(canvas,{
+      text:importUrl.length<2953?importUrl:encoded,
+      width:220,height:220,
+      colorDark:'#0f2744',colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+    warn.innerHTML='✓ Scannez avec votre téléphone pour importer';
+    warn.style.color='var(--green)';
+  } catch {
+    warn.innerHTML='❌ Données trop volumineuses. Utilisez Export/Import JSON.';
+    warn.style.color='var(--red)'; area.style.display='none';
+  }
+}
+
+function checkQRImport() {
+  const hash=location.hash;
+  if (!hash.startsWith('#import=')) return;
+  const encoded=hash.slice(8);
+  try {
+    const json=decodeURIComponent(escape(atob(encoded)));
+    const data=JSON.parse(json);
+    if (!data.clients||!data.factures) return;
+    if (!confirm(`Importer les données reçues par QR Code ?\n• ${data.clients.length} clients\n• ${data.factures.length} factures\n• ${data.devis?.length||0} devis`)) return;
+    DB=data;
+    if(!DB.seq) DB.seq={d:1,f:1};
+    if(!DB.devis) DB.devis=[];
+    if(!DB.fournisseurs) DB.fournisseurs=[];
+    if(!DB.users) DB.users=[];
+    if(!DB.profil) DB.profil={nom:'Anas Aftis',ville:'Rabat',pays:'Maroc'};
+    sv(); ensureAdmin(); renderDash(); renderSidebar();
+    notif('✓ Données importées via QR Code');
+    history.replaceState(null,'',location.pathname);
+  } catch {}
+}
+
+
+// ═══════════════════════════════════════════════════════
+//  FICHES D'INTERVENTION
+// ═══════════════════════════════════════════════════════
+function inum() { return 'INT-' + String((DB.seq?.i)||1).padStart(4,'0'); }
+
+function openInterModal(editId) {
+  if (!DB.interventions) DB.interventions = [];
+  document.getElementById('int-id').value = editId||'';
+  document.getElementById('inter-title').textContent = editId ? 'Modifier la fiche' : 'Nouvelle fiche d\'intervention';
+
+  // Remplir clients
+  const csel = document.getElementById('int-cli');
+  csel.innerHTML = '<option value="">— Sélectionner un client —</option>' +
+    DB.clients.map(c=>`<option value="${c.id}">${esc(c.nom)}</option>`).join('');
+
+  if (editId) {
+    const it = DB.interventions.find(x=>x.id===editId); if(!it) return;
+    document.getElementById('int-num').value      = it.numero;
+    document.getElementById('int-cli').value      = it.clientId||'';
+    document.getElementById('int-statut').value   = it.statut||'En cours';
+    document.getElementById('int-date').value     = it.date||'';
+    document.getElementById('int-heure-debut').value = it.heureDebut||'';
+    document.getElementById('int-heure-fin').value   = it.heureFin||'';
+    document.getElementById('int-tech').value     = it.tech||DB.profil?.nom||'';
+    document.getElementById('int-lieu').value     = it.lieu||'';
+    document.getElementById('int-type').value     = it.type||'Dépannage / Réparation';
+    document.getElementById('int-materiel').value = it.materiel||'';
+    document.getElementById('int-modele').value   = it.modele||'';
+    document.getElementById('int-serie').value    = it.serie||'';
+    document.getElementById('int-priorite').value = it.priorite||'Normale';
+    document.getElementById('int-probleme').value = it.probleme||'';
+    document.getElementById('int-solution').value = it.solution||'';
+    document.getElementById('int-pieces').value   = it.pieces||'';
+    document.getElementById('int-recomm').value   = it.recomm||'';
+    document.getElementById('int-obs').value      = it.obs||'';
+    document.getElementById('int-montant').value  = it.montant||'';
+  } else {
+    document.getElementById('int-num').value      = inum();
+    document.getElementById('int-date').value     = new Date().toISOString().split('T')[0];
+    document.getElementById('int-statut').value   = 'En cours';
+    document.getElementById('int-tech').value     = DB.profil?.nom||'Anas Aftis';
+    document.getElementById('int-priorite').value = 'Normale';
+    document.getElementById('int-type').value     = 'Dépannage / Réparation';
+    ['int-heure-debut','int-heure-fin','int-lieu','int-materiel','int-modele',
+     'int-serie','int-probleme','int-solution','int-pieces','int-recomm','int-obs','int-montant']
+      .forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+    document.getElementById('int-new-cli').value = '';
+  }
+  openOv('ov-inter');
+}
+
+function addQuickClient() {
+  const nom = document.getElementById('int-new-cli').value.trim();
+  if (!nom) { alert('Entrez un nom de client'); return; }
+  // Vérifier si existe déjà
+  let c = DB.clients.find(x=>x.nom.toLowerCase()===nom.toLowerCase());
+  if (!c) {
+    c = { id:uid(), nom, contact:'', email:'', tel:'', ice:'', rc:'', adr:'', ville:'Rabat', pays:'Maroc' };
+    DB.clients.push(c); sv();
+  }
+  // Mettre à jour le select
+  const csel = document.getElementById('int-cli');
+  if (!csel.querySelector(`option[value="${c.id}"]`)) {
+    const opt = document.createElement('option');
+    opt.value = c.id; opt.textContent = c.nom;
+    csel.appendChild(opt);
+  }
+  csel.value = c.id;
+  document.getElementById('int-new-cli').value = '';
+  notif('✓ Client "' + nom + '" ajouté');
+}
+
+function saveInter() {
+  const editId = document.getElementById('int-id').value;
+  const clientId = document.getElementById('int-cli').value;
+  const date = document.getElementById('int-date').value;
+  if (!date) { alert('La date est requise'); return; }
+  if (!DB.interventions) DB.interventions = [];
+
+  const obj = {
+    id: editId||uid(),
+    numero: document.getElementById('int-num').value,
+    clientId, statut: document.getElementById('int-statut').value,
+    date, heureDebut: document.getElementById('int-heure-debut').value,
+    heureFin: document.getElementById('int-heure-fin').value,
+    tech: document.getElementById('int-tech').value,
+    lieu: document.getElementById('int-lieu').value,
+    type: document.getElementById('int-type').value,
+    materiel: document.getElementById('int-materiel').value,
+    modele: document.getElementById('int-modele').value,
+    serie: document.getElementById('int-serie').value,
+    priorite: document.getElementById('int-priorite').value,
+    probleme: document.getElementById('int-probleme').value,
+    solution: document.getElementById('int-solution').value,
+    pieces: document.getElementById('int-pieces').value,
+    recomm: document.getElementById('int-recomm').value,
+    obs: document.getElementById('int-obs').value,
+    montant: parseFloat(document.getElementById('int-montant').value)||0,
+    createdAt: editId ? undefined : new Date().toISOString()
+  };
+
+  if (editId) {
+    const i = DB.interventions.findIndex(x=>x.id===editId);
+    obj.createdAt = DB.interventions[i].createdAt;
+    DB.interventions[i] = obj;
+  } else {
+    DB.interventions.push(obj);
+    if (!DB.seq) DB.seq = {d:1,f:1,i:1};
+    DB.seq.i++;
+  }
+
+  // Créer facture liée si coché
+  if (document.getElementById('int-to-fac')?.checked && clientId && obj.montant>0) {
+    const facNum = fnum();
+    DB.factures.push({
+      id:uid(), numero:facNum,
+      clientId, date:obj.date, ech:'', statut:'En attente', dpay:'',
+      objet:`Intervention ${obj.numero} — ${obj.type}`,
+      notes:'', fromIntervention: obj.numero,
+      lines:[{id:uid(),des:`${obj.type}${obj.materiel?' — '+obj.materiel:''}`,qte:1,pu:obj.montant,pa:0,tva:0}],
+      ht:obj.montant, tva:0, ttc:obj.montant, cout:0, marge:obj.montant, margePct:100,
+      createdAt:new Date().toISOString()
+    });
+    DB.seq.f++;
+    obj.factureNum = facNum; // Lier la facture à la fiche
+    notif('✓ Fiche enregistrée + Facture ' + facNum + ' créée');
+  } else {
+    notif('✓ Fiche d\'intervention enregistrée');
+  }
+
+  sv(); closeOv('ov-inter'); renderInter(); renderSidebar();
+}
+
+function renderInter() {
+  if (!DB.interventions) DB.interventions = [];
+  const q = (document.getElementById('si')?.value||'').toLowerCase();
+  const st = document.getElementById('si-st')?.value||'';
+  const list = DB.interventions.filter(it => {
+    const c = DB.clients.find(x=>x.id===it.clientId);
+    return (it.numero.toLowerCase().includes(q)||(c&&c.nom.toLowerCase().includes(q))||
+            it.type?.toLowerCase().includes(q)||it.materiel?.toLowerCase().includes(q))
+      && (!st||it.statut===st);
+  }).reverse();
+
+  const tb = document.getElementById('t-inter');
+  if (!list.length) { tb.innerHTML=`<tr><td colspan="8"><div class="empty"><div class="empty-ico">🔧</div><p>Aucune fiche d'intervention</p></div></td></tr>`; return; }
+
+  const prioBadge = {
+    'Urgente':'background:#fee2e2;color:#991b1b',
+    'Critique':'background:#7f1d1d;color:#fff',
+    'Normale':'background:#f1f5f9;color:#475569',
+    'Faible':'background:#f0fdf4;color:#166534'
+  };
+  const statBadge = {
+    'En cours':'b-pend','Terminée':'b-paid','En attente':'b-draft','Annulée':'b-ref'
+  };
+
+  tb.innerHTML = list.map(it => {
+    const c = DB.clients.find(x=>x.id===it.clientId);
+    return `<tr>
+      <td style="font-family:var(--mono);font-size:12px;font-weight:600">${it.numero}</td>
+      <td><strong>${c?esc(c.nom):'—'}</strong>${c?.tel?`<br><span style="font-size:11px;color:var(--text3)">${c.tel}</span>`:''}</td>
+      <td>${fdt(it.date)}${it.heureDebut?`<br><span style="font-size:11px;color:var(--text3)">${it.heureDebut}${it.heureFin?' → '+it.heureFin:''}</span>`:''}</td>
+      <td><span class="badge b-sent">${esc(it.type||'—')}</span></td>
+      <td>${it.materiel?`<strong>${esc(it.materiel)}</strong>${it.modele?`<br><span style="font-size:11px;color:var(--text3)">${esc(it.modele)}</span>`:''}` :'—'}</td>
+      <td>${esc(it.tech||'—')}</td>
+      <td>
+        <span class="badge ${statBadge[it.statut]||'b-draft'}">${it.statut}</span>
+        ${it.priorite&&it.priorite!=='Normale'?`<br><span class="badge" style="margin-top:3px;${prioBadge[it.priorite]||''}">${it.priorite}</span>`:''}
+        ${it.factureNum?`<br><span class="badge b-paid" style="margin-top:3px">📄 ${it.factureNum}</span>`:''}
+      </td>
+      <td><div class="acts">
+        <button class="btn btn-out btn-xs" onclick="printInter('${it.id}')" title="Imprimer">⎙</button>
+        <button class="btn btn-out btn-xs" onclick="openInterModal('${it.id}')" title="Modifier">✎</button>
+        <button class="btn btn-danger btn-xs" onclick="delInter('${it.id}')">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function delInter(id) {
+  if (!confirm('Supprimer cette fiche ?')) return;
+  DB.interventions = DB.interventions.filter(x=>x.id!==id);
+  sv(); renderInter();
+}
+
+// ── Impression fiche d'intervention ──
+function printInter(id) {
+  const it = id ? DB.interventions.find(x=>x.id===id)
+    : {
+        numero: document.getElementById('int-num').value,
+        clientId: document.getElementById('int-cli').value,
+        statut: document.getElementById('int-statut').value,
+        date: document.getElementById('int-date').value,
+        heureDebut: document.getElementById('int-heure-debut').value,
+        heureFin: document.getElementById('int-heure-fin').value,
+        tech: document.getElementById('int-tech').value,
+        lieu: document.getElementById('int-lieu').value,
+        type: document.getElementById('int-type').value,
+        materiel: document.getElementById('int-materiel').value,
+        modele: document.getElementById('int-modele').value,
+        serie: document.getElementById('int-serie').value,
+        priorite: document.getElementById('int-priorite').value,
+        probleme: document.getElementById('int-probleme').value,
+        solution: document.getElementById('int-solution').value,
+        pieces: document.getElementById('int-pieces').value,
+        recomm: document.getElementById('int-recomm').value,
+        obs: document.getElementById('int-obs').value,
+        montant: parseFloat(document.getElementById('int-montant').value)||0
+      };
+  if (!it) return;
+
+  const c = DB.clients.find(x=>x.id===it.clientId);
+  const p = DB.profil;
+  const statColors = {
+    'Terminée':'background:#d1fae5;color:#065f46;border:1px solid #6ee7b7',
+    'En cours':'background:#fef3c7;color:#92400e;border:1px solid #fcd34d',
+    'En attente':'background:#f1f5f9;color:#475569;border:1px solid #cbd5e1',
+    'Annulée':'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5'
+  };
+  const prioColors = {
+    'Urgente':'background:#fee2e2;color:#991b1b',
+    'Critique':'background:#7f1d1d;color:#fff',
+    'Normale':'background:#f1f5f9;color:#475569',
+    'Faible':'background:#f0fdf4;color:#166534'
+  };
+
+  const zone = document.getElementById('pzone');
+  zone.innerHTML = `
+  <div style="padding:12mm 16mm;font-family:'Inter',sans-serif;font-size:11.5px;max-width:210mm;margin:0 auto;color:#1e293b">
+
+    <!-- EN-TÊTE -->
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6mm">
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#0f2744">${esc(p.nom||'Anas Aftis')}</div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;line-height:1.8">
+          ${p.metier||'Auto-entrepreneur'}<br>
+          ${p.adr?esc(p.adr)+', ':''}${p.ville||'Rabat'}<br>
+          ${p.email?esc(p.email):''}${p.tel?' · '+esc(p.tel):''}
+        </div>
+        <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">
+          ${p.ice?`<span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:2px 8px;font-size:10px;color:#1e40af;font-family:monospace">ICE: ${p.ice}</span>`:''}
+          ${p.if?`<span style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:2px 8px;font-size:10px;color:#1e40af;font-family:monospace">IF: ${p.if}</span>`:''}
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin-bottom:3px">Fiche d'intervention</div>
+        <div style="font-family:monospace;font-size:22px;font-weight:700;color:#0f2744">${esc(it.numero)}</div>
+        <div style="margin-top:8px">
+          <span style="padding:4px 12px;border-radius:5px;font-size:11px;font-weight:700;${statColors[it.statut]||'background:#f1f5f9;color:#475569'}">${it.statut}</span>
+        </div>
+        ${it.priorite&&it.priorite!=='Normale'?`<div style="margin-top:4px"><span style="padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;${prioColors[it.priorite]||''}">⚡ ${it.priorite}</span></div>`:''}
+      </div>
+    </div>
+
+    <!-- RÈGLE -->
+    <div style="height:3px;background:linear-gradient(90deg,#0f2744,#2563eb,transparent);margin-bottom:5mm"></div>
+
+    <!-- INFOS PRINCIPALES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-bottom:5mm">
+
+      <!-- CLIENT -->
+      <div style="background:#f8fafc;border-left:4px solid #d97706;padding:10px 14px;border-radius:0 6px 6px 0">
+        <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin-bottom:5px">Client</div>
+        <div style="font-weight:700;font-size:14px;color:#0f2744">${c?esc(c.nom):'Client non spécifié'}</div>
+        ${c?.contact?`<div style="font-size:11px;color:#475569">${esc(c.contact)}</div>`:''}
+        ${c?.adr?`<div style="font-size:11px;color:#475569">${esc(c.adr)}${c.ville?', '+esc(c.ville):''}</div>`:''}
+        ${c?.tel?`<div style="font-size:11px;color:#475569">📞 ${esc(c.tel)}</div>`:''}
+        ${c?.ice?`<div style="font-size:10px;color:#94a3b8;margin-top:3px;font-family:monospace">ICE: ${c.ice}</div>`:''}
+      </div>
+
+      <!-- INTERVENTION -->
+      <div style="background:#f8fafc;border-left:4px solid #2563eb;padding:10px 14px;border-radius:0 6px 6px 0">
+        <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin-bottom:5px">Détails</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase">Date</div><div style="font-weight:600;font-size:12px">${fdt(it.date)}</div></div>
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase">Heure</div><div style="font-weight:600;font-size:12px">${it.heureDebut||'—'}${it.heureFin?' → '+it.heureFin:''}</div></div>
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase">Technicien</div><div style="font-weight:600;font-size:12px">${esc(it.tech||'—')}</div></div>
+          <div><div style="font-size:9px;color:#94a3b8;text-transform:uppercase">Type</div><div style="font-weight:600;font-size:12px">${esc(it.type||'—')}</div></div>
+          ${it.lieu?`<div style="grid-column:1/-1"><div style="font-size:9px;color:#94a3b8;text-transform:uppercase">Lieu</div><div style="font-weight:600;font-size:12px">${esc(it.lieu)}</div></div>`:''}
+        </div>
+      </div>
+    </div>
+
+    <!-- MATÉRIEL -->
+    ${it.materiel?`
+    <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:10px 14px;margin-bottom:4mm">
+      <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#0284c7;font-weight:700;margin-bottom:6px">🖥 Matériel / Équipement</div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <div><span style="color:#64748b;font-size:10px">Désignation : </span><strong>${esc(it.materiel)}</strong></div>
+        ${it.modele?`<div><span style="color:#64748b;font-size:10px">Marque/Modèle : </span><strong>${esc(it.modele)}</strong></div>`:''}
+        ${it.serie?`<div><span style="color:#64748b;font-size:10px">N° Série : </span><strong style="font-family:monospace">${esc(it.serie)}</strong></div>`:''}
+      </div>
+    </div>`:'' }
+
+    <!-- PROBLÈME -->
+    ${it.probleme?`
+    <div style="margin-bottom:4mm">
+      <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#dc2626;font-weight:700;margin-bottom:5px">❗ Problème signalé</div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px 14px;font-size:12px;line-height:1.7;color:#334155;min-height:16mm">${esc(it.probleme)}</div>
+    </div>`:''}
+
+    <!-- SOLUTION -->
+    <div style="margin-bottom:4mm">
+      <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#059669;font-weight:700;margin-bottom:5px">✅ Travaux effectués / Solution</div>
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px 14px;font-size:12px;line-height:1.7;color:#334155;min-height:20mm">${it.solution?esc(it.solution):''}</div>
+    </div>
+
+    <!-- PIÈCES -->
+    ${it.pieces?`
+    <div style="margin-bottom:4mm">
+      <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#7c3aed;font-weight:700;margin-bottom:5px">🔩 Pièces remplacées / Fournitures</div>
+      <div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:6px;padding:10px 14px;font-size:12px;line-height:1.7;color:#334155">${esc(it.pieces)}</div>
+    </div>`:''}
+
+    <!-- RECOMMANDATIONS -->
+    ${it.recomm?`
+    <div style="margin-bottom:4mm">
+      <div style="font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#d97706;font-weight:700;margin-bottom:5px">💡 Recommandations</div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:10px 14px;font-size:12px;line-height:1.7;color:#334155">${esc(it.recomm)}</div>
+    </div>`:''}
+
+    <!-- MONTANT — seulement si facture liée -->
+    ${it.factureNum?`
+    <div style="margin-bottom:5mm;text-align:right">
+      <div style="display:inline-block;background:#0f2744;color:#fff;border-radius:8px;padding:10px 20px">
+        <div style="font-size:10px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.1em">Montant HT — Facture ${it.factureNum}</div>
+        <div style="font-family:monospace;font-size:20px;font-weight:700;margin-top:2px">${fmn(it.montant)} MAD</div>
+      </div>
+    </div>`:''}
+
+    <!-- SIGNATURES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8mm;margin-top:6mm">
+      <div style="border:1px solid #e2e8f0;border-radius:6px;padding:12px;text-align:center">
+        <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14mm">Signature du technicien</div>
+        <div style="border-top:1px solid #e2e8f0;padding-top:6px;font-size:11px;color:#475569">${esc(it.tech||p.nom||'Anas Aftis')}</div>
+      </div>
+      <div style="border:1px solid #e2e8f0;border-radius:6px;padding:12px;text-align:center">
+        <div style="font-size:9px;color:#94a3b8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14mm">Signature et cachet du client</div>
+        <div style="border-top:1px solid #e2e8f0;padding-top:6px;font-size:11px;color:#475569">${c?esc(c.nom):'Client'}</div>
+      </div>
+    </div>
+
+    <!-- PIED DE PAGE -->
+    <div style="margin-top:8mm;padding-top:4mm;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center;line-height:1.8">
+      ${esc(p.nom||'Anas Aftis')} · ${p.metier||'Auto-entrepreneur'} · ${p.ville||'Maroc'}
+      ${p.email?' · '+esc(p.email):''}${p.tel?' · '+esc(p.tel):''}
+    </div>
+  </div>`;
+
+  document.querySelector('.shell').style.display = 'none';
+  // Masquer aussi le modal et les overlays
+  document.querySelectorAll('.ov').forEach(o => o.style.display = 'none');
+  document.getElementById('notif').style.display = 'none';
+  zone.style.display = 'block';
+  window.print();
+  // Restaurer
+  document.querySelector('.shell').style.display = 'flex';
+  document.querySelectorAll('.ov.on').forEach(o => o.style.display = 'flex');
+  document.getElementById('notif').style.display = '';
+  zone.style.display = 'none';
+  zone.innerHTML = '';
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+ensureAdmin();
+const sessionUser=loadSession();
+if(sessionUser){
+  CU=sessionUser;
+  document.getElementById('lock-screen').classList.add('hidden');
+  updTopbar();applyRoleUI();
+}else{
+  renderLogin();
+}
+renderDash();
+renderSidebar();
+initAutoSave();
+checkQRImport();
+
+setInterval(()=>{
+  if(CU&&!loadSession()){lockApp();notif('⏱ Session expirée');}
+  else updTopbar();
+},60000);
+</script>
+</body>
+</html>
